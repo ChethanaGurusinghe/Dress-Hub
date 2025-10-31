@@ -28,9 +28,15 @@ public class RoleSelectionController {
         adminloginstage.show();
     }
 
+    Stage employeeloginstage = new Stage();
     @FXML
     void btnEmployeeOnAction(ActionEvent event) {
-
+        try {
+            employeeloginstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeLoginForm.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        employeeloginstage.show();
     }
 
 }
