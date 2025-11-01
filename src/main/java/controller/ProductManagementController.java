@@ -2,10 +2,15 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ProductManagementController {
 
@@ -60,9 +65,15 @@ public class ProductManagementController {
     @FXML
     private TableView<?> tblProducts;
 
+    Stage addproductstage = new Stage();
     @FXML
     void btnAddProductOnAction(ActionEvent event) {
-
+        try {
+            addproductstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddProductForm.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addproductstage.show();
     }
 
     @FXML
