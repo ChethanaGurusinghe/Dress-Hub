@@ -96,9 +96,15 @@ public class ProductManagementController {
 
     }
 
+    Stage updateproductStage = new Stage();
     @FXML
     void btnEditOnAction(ActionEvent event) {
-
+        try {
+            updateproductStage.setScene(new Scene( FXMLLoader.load(getClass().getResource("/view/UpdateProductForm.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        updateproductStage.show();
     }
 
     @FXML
