@@ -2,15 +2,15 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.stage.Stage;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
-import java.io.IOException;
+public class ProductManagementController {
 
-public class AdminDashboardController {
+    @FXML
+    private Button btnAddProduct;
 
     @FXML
     private Button btnAdminDashboard;
@@ -20,6 +20,12 @@ public class AdminDashboardController {
 
     @FXML
     private Button btnCategoryManagement;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnEdit;
 
     @FXML
     private Button btnEmployeeManagement;
@@ -34,16 +40,30 @@ public class AdminDashboardController {
     private Button btnSupplierManagement;
 
     @FXML
-    private Label lblLowStock;
+    private TableColumn<?, ?> colCategory;
 
     @FXML
-    private Label lblTotalOrders;
+    private TableColumn<?, ?> colProductId;
 
     @FXML
-    private Label lblTotalProducts;
+    private TableColumn<?, ?> colProductName;
 
     @FXML
-    private Label lblTotalSales;
+    private TableColumn<?, ?> colQtyInInventory;
+
+    @FXML
+    private TableColumn<?, ?> colUnitPrice;
+
+    @FXML
+    private TextField searchTxtFeild;
+
+    @FXML
+    private TableView<?> tblProducts;
+
+    @FXML
+    void btnAddProductOnAction(ActionEvent event) {
+
+    }
 
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
@@ -61,6 +81,16 @@ public class AdminDashboardController {
     }
 
     @FXML
+    void btnDeleteOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btnEditOnAction(ActionEvent event) {
+
+    }
+
+    @FXML
     void btnEmployeeManagementOnAction(ActionEvent event) {
 
     }
@@ -70,15 +100,9 @@ public class AdminDashboardController {
 
     }
 
-    Stage productManagementstage = new Stage();
     @FXML
     void btnProdutManagementOnAction(ActionEvent event) {
-        try {
-            productManagementstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ProductManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        productManagementstage.show();
+
     }
 
     @FXML
