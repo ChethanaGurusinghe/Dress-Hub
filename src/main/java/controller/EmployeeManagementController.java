@@ -62,17 +62,6 @@ public class EmployeeManagementController {
     @FXML
     private TableView<?> tblEmployee;
 
-    Stage addProductStage = new Stage();
-    @FXML
-    void btnAddProductOnAction(ActionEvent event) {
-        try {
-            addProductStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddEmployeeForm.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        addProductStage.show();
-    }
-
     Stage adminDashboardStage = new Stage();
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
@@ -130,9 +119,26 @@ public class EmployeeManagementController {
         productStage.show();
     }
 
+    Stage supplierStage = new Stage();
     @FXML
     void btnSupplierManagementOnAction(ActionEvent event) {
+        try {
+            supplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SupplierManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        supplierStage.show();
+    }
 
+    Stage addEmployeeStage = new Stage();
+    public void btnAddEmployeeOnAction(ActionEvent actionEvent) {
+
+        try {
+            addEmployeeStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddEmployeeForm.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEmployeeStage.show();
     }
 
 }

@@ -6,16 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ProductManagementController {
+public class SupplierManagementController {
 
     @FXML
-    private Button btnAddProduct;
+    private Button btnAddSupplier;
 
     @FXML
     private Button btnAdminDashboard;
@@ -45,46 +44,46 @@ public class ProductManagementController {
     private Button btnSupplierManagement;
 
     @FXML
-    private TableColumn<?, ?> colCategory;
+    private TableColumn<?, ?> colCompanyName;
 
     @FXML
-    private TableColumn<?, ?> colProductId;
+    private TableColumn<?, ?> colEmail;
 
     @FXML
-    private TableColumn<?, ?> colProductName;
+    private TableColumn<?, ?> colNotes;
 
     @FXML
-    private TableColumn<?, ?> colQtyInInventory;
+    private TableColumn<?, ?> colPhoneNo;
 
     @FXML
-    private TableColumn<?, ?> colUnitPrice;
+    private TableColumn<?, ?> colSupplierId;
+
+    @FXML
+    private TableColumn<?, ?> colSupplierName;
 
     @FXML
     private TextField searchTxtFeild;
 
+    Stage addSupplierStage = new Stage();
     @FXML
-    private TableView<?> tblProducts;
-
-    Stage addproductstage = new Stage();
-    @FXML
-    void btnAddProductOnAction(ActionEvent event) {
+    void btnAddSupplierOnAction(ActionEvent event) {
         try {
-            addproductstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddProductForm.fxml"))));
+            addSupplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddSupplierForm.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        addproductstage.show();
+        addSupplierStage.show();
     }
 
-    Stage dashboardStage = new Stage();
+    Stage adminDashboardStage = new Stage();
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
         try {
-            dashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
+            adminDashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        dashboardStage.show();
+        adminDashboardStage.show();
     }
 
     @FXML
@@ -102,26 +101,27 @@ public class ProductManagementController {
 
     }
 
-    Stage updateproductStage = new Stage();
+    Stage editSupplierStage = new Stage();
     @FXML
     void btnEditOnAction(ActionEvent event) {
         try {
-            updateproductStage.setScene(new Scene( FXMLLoader.load(getClass().getResource("/view/UpdateProductForm.fxml"))));
+            editSupplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateSupplierForm.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        updateproductStage.show();
+        editSupplierStage.show();
     }
 
-    Stage employeeStage = new Stage();
+    Stage employeeManagementStage = new Stage();
     @FXML
     void btnEmployeeManagementOnAction(ActionEvent event) {
+
         try {
-            employeeStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
+            employeeManagementStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        employeeStage.show();
+        employeeManagementStage.show();
     }
 
     @FXML
@@ -129,20 +129,21 @@ public class ProductManagementController {
 
     }
 
+    Stage productManagementstage = new Stage();
     @FXML
     void btnProdutManagementOnAction(ActionEvent event) {
 
-    }
-
-    Stage supplierStage = new Stage();
-    @FXML
-    void btnSupplierManagementOnAction(ActionEvent event) {
         try {
-            supplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SupplierManagement.fxml"))));
+            productManagementstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ProductManagement.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        supplierStage.show();
+        productManagementstage.show();
+    }
+
+    @FXML
+    void btnSupplierManagementOnAction(ActionEvent event) {
+
     }
 
 }

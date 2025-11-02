@@ -87,9 +87,15 @@ public class AdminDashboardController {
         productManagementstage.show();
     }
 
+    Stage supplierStage = new Stage();
     @FXML
     void btnSupplierManagementOnAction(ActionEvent event) {
-
+        try {
+            supplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SupplierManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        supplierStage.show();
     }
 
 }
