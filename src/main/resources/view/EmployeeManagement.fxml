@@ -31,12 +31,12 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnProductManagement" layoutX="60.0" layoutY="198.0" mnemonicParsing="false" onAction="#btnProdutManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #E64A19;" text="Product Management" textFill="WHITE">
+      <Button fx:id="btnProductManagement" layoutX="60.0" layoutY="198.0" mnemonicParsing="false" onAction="#btnProdutManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Product Management" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnEmployeeManagement" layoutX="60.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnEmployeeManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Employee Management" textFill="WHITE">
+      <Button fx:id="btnEmployeeManagement" layoutX="60.0" layoutY="245.0" mnemonicParsing="false" onAction="#btnEmployeeManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #E64A19;" text="Employee Management" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

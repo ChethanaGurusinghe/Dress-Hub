@@ -76,9 +76,15 @@ public class ProductManagementController {
         addproductstage.show();
     }
 
+    Stage dashboardStage = new Stage();
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
-
+        try {
+            dashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        dashboardStage.show();
     }
 
     @FXML
@@ -107,9 +113,15 @@ public class ProductManagementController {
         updateproductStage.show();
     }
 
+    Stage employeeStage = new Stage();
     @FXML
     void btnEmployeeManagementOnAction(ActionEvent event) {
-
+        try {
+            employeeStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        employeeStage.show();
     }
 
     @FXML

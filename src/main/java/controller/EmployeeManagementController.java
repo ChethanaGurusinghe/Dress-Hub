@@ -2,10 +2,15 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class EmployeeManagementController {
 
@@ -57,14 +62,26 @@ public class EmployeeManagementController {
     @FXML
     private TableView<?> tblEmployee;
 
+    Stage addProductStage = new Stage();
     @FXML
     void btnAddProductOnAction(ActionEvent event) {
-
+        try {
+            addProductStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddEmployeeForm.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addProductStage.show();
     }
 
+    Stage adminDashboardStage = new Stage();
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
-
+        try {
+            adminDashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        adminDashboardStage.show();
     }
 
     @FXML
@@ -82,9 +99,15 @@ public class EmployeeManagementController {
 
     }
 
+    Stage editEmployeeStage = new Stage();
     @FXML
     void btnEditOnAction(ActionEvent event) {
-
+        try {
+            editEmployeeStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateEmployee.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        editEmployeeStage.show();
     }
 
     @FXML
@@ -96,10 +119,15 @@ public class EmployeeManagementController {
     void btnLogOutOnAction(ActionEvent event) {
 
     }
-
+    Stage productStage = new Stage();
     @FXML
     void btnProdutManagementOnAction(ActionEvent event) {
-
+        try {
+            productStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ProductManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        productStage.show();
     }
 
     @FXML
