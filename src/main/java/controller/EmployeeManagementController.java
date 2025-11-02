@@ -73,9 +73,15 @@ public class EmployeeManagementController {
         adminDashboardStage.show();
     }
 
+    Stage adminStage = new Stage();
     @FXML
     void btnAdminManagementOnAction(ActionEvent event) {
-
+        try {
+            adminStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        adminStage.show();
     }
 
     @FXML
