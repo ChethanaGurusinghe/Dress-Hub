@@ -73,7 +73,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <TableView layoutX="496.0" layoutY="212.0" prefHeight="402.0" prefWidth="846.0">
+      <TableView fx:id="tblSupplier" layoutX="496.0" layoutY="212.0" prefHeight="402.0" prefWidth="846.0">
         <columns>
           <TableColumn fx:id="colSupplierId" prefWidth="94.4000244140625" text="SupplierID" />
           <TableColumn fx:id="colCompanyName" prefWidth="159.2000732421875" text="Company Name" />

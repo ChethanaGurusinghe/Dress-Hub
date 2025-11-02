@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane prefHeight="785.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminManagementController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a1128" height="800.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-color: #0A1128;" width="350.0" />
+      <ImageView fitHeight="104.0" fitWidth="98.0" layoutX="50.0" layoutY="50.0">
+         <image>
+            <Image url="@../img/logo.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="148.0" layoutY="87.0" prefHeight="40.0" prefWidth="142.0" style="-fx-text-fill: white;" text="DressHub">
+         <font>
+            <Font name="Castellar" size="25.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnAdminDashboard" layoutX="80.0" layoutY="167.0" mnemonicParsing="false" onAction="#btnAdminDashboardOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Dashboard" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnProductManagement" layoutX="80.0" layoutY="218.0" mnemonicParsing="false" onAction="#btnProdutManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Product Management" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnEmployeeManagement" layoutX="80.0" layoutY="265.0" mnemonicParsing="false" onAction="#btnEmployeeManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Employee Management" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSupplierManagement" layoutX="80.0" layoutY="308.0" mnemonicParsing="false" onAction="#btnSupplierManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Supplier Management" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnAdminManagement" layoutX="80.0" layoutY="355.0" mnemonicParsing="false" onAction="#btnAdminManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #E64A19;" text="Admin Management" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCategoryManagement" layoutX="80.0" layoutY="396.0" mnemonicParsing="false" onAction="#btnCategoryManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Category Management" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnLogOut" layoutX="89.0" layoutY="720.0" mnemonicParsing="false" onAction="#btnLogOutOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #E64A19;" text="LogOut" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a1128" height="104.0" layoutX="350.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #0A1128;" width="1196.0" />
+      <Text fill="WHITE" layoutX="793.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Management">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Text>
+      <TextField fx:id="searchTxtFeild" layoutX="621.0" layoutY="154.0" prefHeight="26.0" prefWidth="262.0" text="Serach by admin id" />
+      <Button fx:id="btnAddAdmin" layoutX="1044.0" layoutY="151.0" mnemonicParsing="false" onAction="#btnAddAdminOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #E64A19;" text="+ Add Admin" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <TableView fx:id="tblAdmin" layoutX="621.0" layoutY="219.0" prefHeight="406.0" prefWidth="566.0">
+        <columns>
+          <TableColumn fx:id="colAdminId" prefWidth="111.20001220703125" text="AdminID" />
+          <TableColumn fx:id="colAdminName" prefWidth="159.2000732421875" text="Admin Name" />
+            <TableColumn fx:id="colEmail" prefWidth="166.39996337890625" text="Email" />
+            <TableColumn fx:id="colPhoneNo" prefWidth="128.0" text="Phone No" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnEdit" layoutX="883.0" layoutY="688.0" mnemonicParsing="false" onAction="#btnEditOnAction" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #35BD2C;" text="Edit" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDelete" layoutX="1070.0" layoutY="688.0" mnemonicParsing="false" onAction="#btnDeleteOnAction" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #D50000;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

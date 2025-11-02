@@ -63,7 +63,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNotes" layoutX="935.0" layoutY="359.0" prefHeight="109.0" prefWidth="182.0" />
+      <TextField fx:id="txtNotes" layoutX="935.0" layoutY="359.0" prefHeight="110.0" prefWidth="182.0" />
       <Button fx:id="btnUpdateSupplier" layoutX="682.0" layoutY="554.0" mnemonicParsing="false" onAction="#btnUpdateSupplierOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="Update" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
