@@ -12,11 +12,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SupplierManagementController {
+public class CategoryManagementController {
 
-    public TableView tblSupplier;
     @FXML
-    private Button btnAddSupplier;
+    private Button btnAddCategory;
 
     @FXML
     private Button btnAdminDashboard;
@@ -46,35 +45,29 @@ public class SupplierManagementController {
     private Button btnSupplierManagement;
 
     @FXML
-    private TableColumn<?, ?> colCompanyName;
+    private TableColumn<?, ?> colCategoryId;
 
     @FXML
-    private TableColumn<?, ?> colEmail;
+    private TableColumn<?, ?> colCategoryName;
 
     @FXML
-    private TableColumn<?, ?> colNotes;
-
-    @FXML
-    private TableColumn<?, ?> colPhoneNo;
-
-    @FXML
-    private TableColumn<?, ?> colSupplierId;
-
-    @FXML
-    private TableColumn<?, ?> colSupplierName;
+    private TableColumn<?, ?> colDescription;
 
     @FXML
     private TextField searchTxtFeild;
 
-    Stage addSupplierStage = new Stage();
     @FXML
-    void btnAddSupplierOnAction(ActionEvent event) {
+    private TableView<?> tblCategory;
+
+    Stage addCategoryStage = new Stage();
+    @FXML
+    void btnAddCategoryOnAction(ActionEvent event) {
         try {
-            addSupplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddSupplierForm.fxml"))));
+            addCategoryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddCategoryForm.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        addSupplierStage.show();
+        addCategoryStage.show();
     }
 
     Stage adminDashboardStage = new Stage();
@@ -99,15 +92,9 @@ public class SupplierManagementController {
         adminStage.show();
     }
 
-    Stage categorySatge = new Stage();
     @FXML
     void btnCategoryManagementOnAction(ActionEvent event) {
-        try {
-            categorySatge.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CategoryManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        categorySatge.show();
+
     }
 
     @FXML
@@ -115,27 +102,26 @@ public class SupplierManagementController {
 
     }
 
-    Stage editSupplierStage = new Stage();
+    Stage editStage = new Stage();
     @FXML
     void btnEditOnAction(ActionEvent event) {
         try {
-            editSupplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateSupplierForm.fxml"))));
+            editStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateCategoryForm.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        editSupplierStage.show();
+        editStage.show();
     }
 
-    Stage employeeManagementStage = new Stage();
+    Stage employeeStage = new Stage();
     @FXML
     void btnEmployeeManagementOnAction(ActionEvent event) {
-
         try {
-            employeeManagementStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
+            employeeStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        employeeManagementStage.show();
+        employeeStage.show();
     }
 
     @FXML
@@ -146,7 +132,6 @@ public class SupplierManagementController {
     Stage productManagementstage = new Stage();
     @FXML
     void btnProdutManagementOnAction(ActionEvent event) {
-
         try {
             productManagementstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ProductManagement.fxml"))));
         } catch (IOException e) {
@@ -155,9 +140,15 @@ public class SupplierManagementController {
         productManagementstage.show();
     }
 
+    Stage supplierStage = new Stage();
     @FXML
     void btnSupplierManagementOnAction(ActionEvent event) {
-
+        try {
+            supplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SupplierManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        supplierStage.show();
     }
 
 }

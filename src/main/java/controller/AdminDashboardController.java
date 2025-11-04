@@ -61,9 +61,15 @@ public class AdminDashboardController {
         adminStage.show();
     }
 
+    Stage categorySatge = new Stage();
     @FXML
     void btnCategoryManagementOnAction(ActionEvent event) {
-
+        try {
+            categorySatge.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CategoryManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        categorySatge.show();
     }
 
     Stage employeeManagementStage = new Stage();
