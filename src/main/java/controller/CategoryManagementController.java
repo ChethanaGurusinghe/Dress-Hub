@@ -102,15 +102,15 @@ public class CategoryManagementController {
 
     }
 
-    Stage editStage = new Stage();
+    Stage editCategoryStage = new Stage();
     @FXML
     void btnEditOnAction(ActionEvent event) {
         try {
-            editStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateCategoryForm.fxml"))));
+            editCategoryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateCategoryForm.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        editStage.show();
+        editCategoryStage.show();
     }
 
     Stage employeeStage = new Stage();
