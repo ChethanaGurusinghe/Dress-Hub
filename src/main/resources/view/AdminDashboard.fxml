@@ -94,22 +94,22 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Text>
-      <Label fx:id="lblTotalSales" layoutX="498.0" layoutY="202.0" text="Total Sales">
+      <Label fx:id="lblTotalSales" layoutX="492.0" layoutY="202.0" text="Total Sales">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblTotalOrders" layoutX="776.0" layoutY="202.0" text="Total Orders">
+      <Label fx:id="lblTotalOrders" layoutX="800.0" layoutY="202.0" text="Total Orders">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblTotalProducts" layoutX="1056.0" layoutY="202.0" text="Total Products">
+      <Label fx:id="lblTotalProducts" layoutX="1081.0" layoutY="202.0" text="Total Products">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblLowStock" layoutX="1334.0" layoutY="202.0" text="Low Stock">
+      <Label fx:id="lblLowStock" layoutX="1376.0" layoutY="202.0" text="Low Stock">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

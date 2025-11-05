@@ -10,15 +10,22 @@ public class DBConnection {
     private Connection connection;
 
     private DBConnection() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dresshub","root","1234");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver"); // Load MySQL driver
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/dresshub", "root", "1234");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("MySQL Driver not found!", e);
+        }
     }
 
-    public static DBConnection getInstance() throws SQLException {
-        return null == instance?instance=new DBConnection():instance;
+    public static synchronized DBConnection getInstance() throws SQLException {
+        if (instance == null || instance.getConnection().isClosed()) {
+            instance = new DBConnection();
+        }
+        return instance;
     }
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         return connection;
     }
-
 }
