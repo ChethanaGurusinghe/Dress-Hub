@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.EventObject;
 import java.util.ResourceBundle;
 
 public class AdminDashboardController implements Initializable {
@@ -54,6 +55,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private BarChart<String, Number> salesChart;
+    private EventObject event;
 
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
@@ -160,16 +162,7 @@ public class AdminDashboardController implements Initializable {
 
     }
 
-    Stage productManagementstage = new Stage();
-    @FXML
-    void btnProdutManagementOnAction(ActionEvent event) {
-        try {
-            productManagementstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ProductManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        productManagementstage.show();
-    }
+
 
     Stage supplierStage = new Stage();
     @FXML
@@ -185,5 +178,25 @@ public class AdminDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDashboardData();
+    }
+
+    Stage productStage = new Stage();
+    public void btnProdutManagementOnAction(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ProductManagement.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            Stage stage = new Stage();
+            stage.setTitle("Product Management");
+            stage.setScene(scene);
+            stage.show();
+
+            // Close the current dashboard window
+            Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            currentStage.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

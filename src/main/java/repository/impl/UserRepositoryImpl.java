@@ -9,9 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class UserRepositoryImpl implements UserRepository {
+
     @Override
     public User findByUsernameAndPassword(String username, String password) {
+
         try (Connection con = DBConnection.getInstance().getConnection()) {
+
             String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, username);

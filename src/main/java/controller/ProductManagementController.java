@@ -1,160 +1,254 @@
 package controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.dto.Product;
+import service.ProductService;
+import service.impl.ProductServiceImpl;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 public class ProductManagementController {
 
-    @FXML
-    private Button btnAddProduct;
+    // Sidebar buttons (fx:id must match your FXML)
+    @FXML private Button btnAdminDashboard;
+    @FXML private Button btnProductManagement;
+    @FXML private Button btnEmployeeManagement;
+    @FXML private Button btnSupplierManagement;
+    @FXML private Button btnAdminManagement;
+    @FXML private Button btnCategoryManagement;
+    @FXML private Button btnLogOut;
+
+    // Product controls
+    @FXML private Button btnAddProduct;
+    @FXML private Button btnEdit;
+    @FXML private Button btnDelete;
+
+    @FXML private TextField searchTxtFeild;
+
+    @FXML private TableView<Product> tblProducts;
+    @FXML private TableColumn<Product, String> colProductId;
+    @FXML private TableColumn<Product, String> colProductName;
+    @FXML private TableColumn<Product, String> colCategory;
+    @FXML private TableColumn<Product, Double> colUnitPrice;
+    @FXML private TableColumn<Product, Integer> colQtyInInventory;
+
+    private final ProductService service = new ProductServiceImpl();
+    private final ObservableList<Product> productList = FXCollections.observableArrayList();
 
     @FXML
-    private Button btnAdminDashboard;
+    public void initialize() {
+        // match Product getter names (getProductId, getDescription, getCategory, getUnitPrice, getQuantity)
+        colProductId.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        colProductName.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category")); // ensure getCategory() exists
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colQtyInInventory.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-    @FXML
-    private Button btnAdminManagement;
+        // load from service
+        refreshTable();
 
-    @FXML
-    private Button btnCategoryManagement;
+        // live search
+        searchTxtFeild.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal == null || newVal.trim().isEmpty()) {
+                tblProducts.setItems(productList);
+            } else {
+                String k = newVal.trim().toLowerCase();
+                ObservableList<Product> filtered = FXCollections.observableArrayList();
+                for (Product p : productList) {
+                    boolean matches = (p.getProductId() != null && p.getProductId().toLowerCase().contains(k))
+                            || (p.getDescription() != null && p.getDescription().toLowerCase().contains(k));
+                    if (matches) filtered.add(p);
+                }
+                tblProducts.setItems(filtered);
+            }
+        });
+    }
 
-    @FXML
-    private Button btnDelete;
+    private void refreshTable() {
+        try {
+            List<Product> all = service.getAllProducts();
+            productList.setAll(all);
+            tblProducts.setItems(productList);
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Load Error", "Could not load products: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
-    @FXML
-    private Button btnEdit;
-
-    @FXML
-    private Button btnEmployeeManagement;
-
-    @FXML
-    private Button btnLogOut;
-
-    @FXML
-    private Button btnProductManagement;
-
-    @FXML
-    private Button btnSupplierManagement;
-
-    @FXML
-    private TableColumn<?, ?> colCategory;
-
-    @FXML
-    private TableColumn<?, ?> colProductId;
-
-    @FXML
-    private TableColumn<?, ?> colProductName;
-
-    @FXML
-    private TableColumn<?, ?> colQtyInInventory;
-
-    @FXML
-    private TableColumn<?, ?> colUnitPrice;
-
-    @FXML
-    private TextField searchTxtFeild;
-
-    @FXML
-    private TableView<?> tblProducts;
-
-    Stage addproductstage = new Stage();
     @FXML
     void btnAddProductOnAction(ActionEvent event) {
         try {
-            addproductstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddProductForm.fxml"))));
+            openFormModal("/view/AddProductForm.fxml", "Add Product");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to open Add Product form: " + e.getMessage());
+            e.printStackTrace();
         }
-        addproductstage.show();
     }
 
-    Stage dashboardStage = new Stage();
     @FXML
-    void btnAdminDashboardOnAction(ActionEvent event) {
-        try {
-            dashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    void btnEditOnAction(ActionEvent event) {
+        Product selected = tblProducts.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a product to edit.");
+            return;
         }
-        dashboardStage.show();
-    }
 
-    Stage adminStage = new Stage();
-    @FXML
-    void btnAdminManagementOnAction(ActionEvent event) {
         try {
-            adminStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        adminStage.show();
-    }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UpdateProductForm.fxml"));
+            Parent root = loader.load();
 
-    Stage categorySatge = new Stage();
-    @FXML
-    void btnCategoryManagementOnAction(ActionEvent event) {
-        try {
-            categorySatge.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CategoryManagement.fxml"))));
+            // pass selected product to controller
+            UpdateProductFormController ctrl = loader.getController();
+            ctrl.setProductData(selected);
+
+            Stage stage = new Stage();
+            stage.setTitle("Update Product");
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+
+            refreshTable();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showAlert(Alert.AlertType.ERROR, "Error", "Unable to open Update Product form: " + e.getMessage());
+            e.printStackTrace();
         }
-        categorySatge.show();
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-
-    }
-
-    Stage updateproductStage = new Stage();
-    @FXML
-    void btnEditOnAction(ActionEvent event) {
-        try {
-            updateproductStage.setScene(new Scene( FXMLLoader.load(getClass().getResource("/view/UpdateProductForm.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Product selected = tblProducts.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a product to delete.");
+            return;
         }
-        updateproductStage.show();
-    }
 
-    Stage employeeStage = new Stage();
-    @FXML
-    void btnEmployeeManagementOnAction(ActionEvent event) {
-        try {
-            employeeStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Delete");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to delete product " + selected.getProductId() + " ?");
+
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.NO);
+        confirm.getButtonTypes().setAll(yes, no);
+
+        Optional<ButtonType> res = confirm.showAndWait();
+        if (res.isPresent() && res.get() == yes) {
+            try {
+                boolean ok = service.deleteProduct(selected.getProductId());
+                if (ok) {
+                    showAlert(Alert.AlertType.INFORMATION, "Deleted", "Product deleted successfully.");
+                    refreshTable();
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Delete Failed", "Could not delete product.");
+                }
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Error deleting product: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
-        employeeStage.show();
     }
 
-    @FXML
-    void btnLogOutOnAction(ActionEvent event) {
-
+    private void openFormModal(String fxml, String title) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource(fxml));
+        Stage stage = new Stage();
+        stage.setTitle(title);
+        stage.setScene(new Scene(root));
+        stage.initOwner(btnAddProduct.getScene().getWindow());
+        stage.showAndWait();
+        refreshTable();
     }
 
-    @FXML
-    void btnProdutManagementOnAction(ActionEvent event) {
-
-    }
-
-    Stage supplierStage = new Stage();
-    @FXML
-    void btnSupplierManagementOnAction(ActionEvent event) {
+    // Sidebar navigation methods (use ActionEvent parameter correctly)
+    public void btnAdminDashboardOnAction(ActionEvent actionEvent) {
         try {
-            supplierStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SupplierManagement.fxml"))));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
+            stage.setTitle("Dashboard");
+            stage.show();
+
+            // close current (if called from a button)
+            Stage current = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            current.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", e.getMessage());
+            e.printStackTrace();
         }
-        supplierStage.show();
     }
 
+    public void btnProdutManagementOnAction(ActionEvent actionEvent) {
+        // you are already in product management; do nothing or refresh
+        refreshTable();
+    }
+
+    public void btnEmployeeManagementOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
+            stage.setTitle("Employee Management");
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void btnSupplierManagementOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SupplierManagement.fxml"))));
+            stage.setTitle("Supplier Management");
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void btnAdminManagementOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminManagement.fxml"))));
+            stage.setTitle("Admin Management");
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void btnCategoryManagementOnAction(ActionEvent actionEvent) {
+        try {
+            Stage stage = new Stage();
+            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CategoryManagement.fxml"))));
+            stage.setTitle("Category Management");
+            stage.show();
+        } catch (IOException e) {
+            showAlert(Alert.AlertType.ERROR, "Navigation Error", e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void btnLogOutOnAction(ActionEvent actionEvent) {
+        // simply close window (or implement logout flow)
+        Stage current = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        current.close();
+    }
+
+    private void showAlert(Alert.AlertType t, String title, String msg) {
+        Alert a = new Alert(t);
+        a.setTitle(title);
+        a.setHeaderText(null);
+        a.setContentText(msg);
+        a.showAndWait();
+    }
 }
