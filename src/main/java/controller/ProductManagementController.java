@@ -20,6 +20,7 @@ import java.util.Optional;
 
 public class ProductManagementController {
 
+    public Button btnUserManagement;
     // Sidebar buttons (fx:id must match your FXML)
     @FXML private Button btnAdminDashboard;
     @FXML private Button btnProductManagement;
@@ -190,35 +191,11 @@ public class ProductManagementController {
         refreshTable();
     }
 
-    public void btnEmployeeManagementOnAction(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
-            stage.setTitle("Employee Management");
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Navigation Error", e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
     public void btnSupplierManagementOnAction(ActionEvent actionEvent) {
         try {
             Stage stage = new Stage();
             stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/SupplierManagement.fxml"))));
             stage.setTitle("Supplier Management");
-            stage.show();
-        } catch (IOException e) {
-            showAlert(Alert.AlertType.ERROR, "Navigation Error", e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public void btnAdminManagementOnAction(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminManagement.fxml"))));
-            stage.setTitle("Admin Management");
             stage.show();
         } catch (IOException e) {
             showAlert(Alert.AlertType.ERROR, "Navigation Error", e.getMessage());
@@ -250,5 +227,15 @@ public class ProductManagementController {
         a.setHeaderText(null);
         a.setContentText(msg);
         a.showAndWait();
+    }
+
+    Stage userStage = new Stage();
+    public void btnUserManagementOnAction(ActionEvent actionEvent) {
+        try {
+            userStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UserManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        userStage.show();
     }
 }

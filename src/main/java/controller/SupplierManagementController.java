@@ -15,6 +15,7 @@ import java.io.IOException;
 public class SupplierManagementController {
 
     public TableView tblSupplier;
+    public Button btnUserManagement;
     @FXML
     private Button btnAddSupplier;
 
@@ -88,17 +89,6 @@ public class SupplierManagementController {
         adminDashboardStage.show();
     }
 
-    Stage adminStage = new Stage();
-    @FXML
-    void btnAdminManagementOnAction(ActionEvent event) {
-        try {
-            adminStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        adminStage.show();
-    }
-
     Stage categorySatge = new Stage();
     @FXML
     void btnCategoryManagementOnAction(ActionEvent event) {
@@ -126,17 +116,6 @@ public class SupplierManagementController {
         editSupplierStage.show();
     }
 
-    Stage employeeManagementStage = new Stage();
-    @FXML
-    void btnEmployeeManagementOnAction(ActionEvent event) {
-
-        try {
-            employeeManagementStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        employeeManagementStage.show();
-    }
 
     @FXML
     void btnLogOutOnAction(ActionEvent event) {
@@ -160,4 +139,13 @@ public class SupplierManagementController {
 
     }
 
+    Stage userStage = new Stage();
+    public void btnUserManagementOnAction(ActionEvent actionEvent) {
+        try {
+            userStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UserManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        userStage.show();
+    }
 }

@@ -35,7 +35,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnEmployeeManagement" layoutX="40.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnEmployeeManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Employee Management" textFill="WHITE">
+      <Button fx:id="btnUserManagement" layoutX="40.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnUserManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="User Management" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -45,12 +45,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnAdminManagement" layoutX="40.0" layoutY="315.0" mnemonicParsing="false" onAction="#btnAdminManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Admin Management" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnCategoryManagement" layoutX="40.0" layoutY="356.0" mnemonicParsing="false" onAction="#btnCategoryManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Category Management" textFill="WHITE">
+      <Button fx:id="btnCategoryManagement" layoutX="40.0" layoutY="313.0" mnemonicParsing="false" onAction="#btnCategoryManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Category Management" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

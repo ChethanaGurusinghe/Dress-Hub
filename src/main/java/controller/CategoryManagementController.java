@@ -20,6 +20,7 @@ import java.util.Optional;
 
 public class CategoryManagementController {
 
+    public Button btnUserManagement;
     // Sidebar buttons (fx:id must match your FXML)
     @FXML
     private Button btnAdminDashboard;
@@ -179,20 +180,16 @@ public class CategoryManagementController {
         navigate(event, "/view/AdminDashboard.fxml", "Dashboard");
     }
 
-    public void btnProdutManagementOnAction(ActionEvent event) { // note spelling same as FXML
+    public void btnProdutManagementOnAction(ActionEvent event) {
         navigate(event, "/view/ProductManagement.fxml", "Product Management");
     }
 
-    public void btnEmployeeManagementOnAction(ActionEvent event) {
-        navigate(event, "/view/EmployeeManagement.fxml", "Employee Management");
+    public void btnUserManagementOnAction(ActionEvent event) {
+        navigate(event, "/view/UserManagement.fxml", "User Management");
     }
 
     public void btnSupplierManagementOnAction(ActionEvent event) {
         navigate(event, "/view/SupplierManagement.fxml", "Supplier Management");
-    }
-
-    public void btnAdminManagementOnAction(ActionEvent event) {
-        navigate(event, "/view/AdminManagement.fxml", "Admin Management");
     }
 
     public void btnCategoryManagementOnAction(ActionEvent event) {
@@ -233,4 +230,5 @@ public class CategoryManagementController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

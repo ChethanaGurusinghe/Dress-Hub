@@ -1,27 +1,41 @@
 package controller;
 
 import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.dto.User;
+import service.UserService;
+import service.impl.UserServiceImpl;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
-public class AdminManagementController {
+public class UserManagementController {
+
+    public Button btnUserManagement;
+    public Button btnAddUser;
+    public TableView tblUser;
+    public TableColumn colRole;
+    UserService service = new UserServiceImpl();
+    ObservableList<User> employeeList = FXCollections.observableArrayList();
 
     @FXML
-    private Button btnAddAdmin;
+    private Button btnAddProduct;
 
     @FXML
     private Button btnAdminDashboard;
-
-    @FXML
-    private Button btnAdminManagement;
 
     @FXML
     private Button btnCategoryManagement;
@@ -33,9 +47,6 @@ public class AdminManagementController {
     private Button btnEdit;
 
     @FXML
-    private Button btnEmployeeManagement;
-
-    @FXML
     private Button btnLogOut;
 
     @FXML
@@ -45,13 +56,13 @@ public class AdminManagementController {
     private Button btnSupplierManagement;
 
     @FXML
-    private TableColumn<?, ?> colAdminId;
-
-    @FXML
-    private TableColumn<?, ?> colAdminName;
-
-    @FXML
     private TableColumn<?, ?> colEmail;
+
+    @FXML
+    private TableColumn<?, ?> colEmployeeId;
+
+    @FXML
+    private TableColumn<?, ?> colEmployeeName;
 
     @FXML
     private TableColumn<?, ?> colPhoneNo;
@@ -59,19 +70,6 @@ public class AdminManagementController {
     @FXML
     private TextField searchTxtFeild;
 
-    @FXML
-    private TableView<?> tblAdmin;
-
-    Stage addAdminStage = new Stage();
-    @FXML
-    void btnAddAdminOnAction(ActionEvent event) {
-        try {
-            addAdminStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddAdminForm.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        addAdminStage.show();
-    }
 
     Stage adminDashboardStage = new Stage();
     @FXML
@@ -84,10 +82,6 @@ public class AdminManagementController {
         adminDashboardStage.show();
     }
 
-    @FXML
-    void btnAdminManagementOnAction(ActionEvent event) {
-
-    }
 
     Stage categorySatge = new Stage();
     @FXML
@@ -105,42 +99,32 @@ public class AdminManagementController {
 
     }
 
-    Stage editStage = new Stage();
+    Stage edituserStage = new Stage();
     @FXML
     void btnEditOnAction(ActionEvent event) {
         try {
-            editStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateAdminForm.fxml"))));
+            edituserStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateUser.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        editStage.show();
+        edituserStage.show();
     }
 
-    Stage employeeStage = new Stage();
-    @FXML
-    void btnEmployeeManagementOnAction(ActionEvent event) {
-        try {
-            employeeStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        employeeStage.show();
-    }
 
     @FXML
     void btnLogOutOnAction(ActionEvent event) {
 
     }
 
-    Stage productManagementstage = new Stage();
+    Stage productStage = new Stage();
     @FXML
     void btnProdutManagementOnAction(ActionEvent event) {
         try {
-            productManagementstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ProductManagement.fxml"))));
+            productStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ProductManagement.fxml"))));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        productManagementstage.show();
+        productStage.show();
     }
 
     Stage supplierStage = new Stage();
@@ -154,4 +138,17 @@ public class AdminManagementController {
         supplierStage.show();
     }
 
+    public void btnUserManagementOnAction(ActionEvent actionEvent) {
+
+    }
+
+    Stage addUserStage = new Stage();
+    public void btnAddUserOnAction(ActionEvent actionEvent) {
+        try {
+            addUserStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AddUserForm.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addUserStage.show();
+    }
 }

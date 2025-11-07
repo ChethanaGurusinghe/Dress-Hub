@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -20,6 +19,7 @@ import java.util.ResourceBundle;
 
 public class AdminDashboardController implements Initializable {
 
+    public Button btnUserManagement;
     @FXML
     private Button btnAdminDashboard;
 
@@ -29,8 +29,6 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private Button btnCategoryManagement;
 
-    @FXML
-    private Button btnEmployeeManagement;
 
     @FXML
     private Button btnLogOut;
@@ -124,16 +122,6 @@ public class AdminDashboardController implements Initializable {
 //        }
 //    }
 
-    Stage adminStage = new Stage();
-    @FXML
-    void btnAdminManagementOnAction(ActionEvent event) {
-        try {
-            adminStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        adminStage.show();
-    }
 
     Stage categorySatge = new Stage();
     @FXML
@@ -146,16 +134,6 @@ public class AdminDashboardController implements Initializable {
         categorySatge.show();
     }
 
-    Stage employeeManagementStage = new Stage();
-    @FXML
-    void btnEmployeeManagementOnAction(ActionEvent event) {
-        try {
-            employeeManagementStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/EmployeeManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        employeeManagementStage.show();
-    }
 
     @FXML
     void btnLogOutOnAction(ActionEvent event) {
@@ -198,5 +176,15 @@ public class AdminDashboardController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    Stage userStage = new Stage();
+    public void btnUserManagementOnAction(ActionEvent actionEvent) {
+        try {
+            userStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UserManagement.fxml"))));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        userStage.show();
     }
 }
