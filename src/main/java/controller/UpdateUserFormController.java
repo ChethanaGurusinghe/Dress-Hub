@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,6 +10,9 @@ import service.impl.UserServiceImpl;
 import util.AlertUtils;
 
 public class UpdateUserFormController {
+
+    private ObservableList<User> userList;
+    private User user;
 
     @FXML
     public Button btnUserUpdate;
@@ -40,6 +44,10 @@ public class UpdateUserFormController {
     }
 
     public void setUserData(User user) {
+
+        this.user = user;
+        this.userList = userList;
+
         txtUserId.setText(user.getUserId());
         txtFullName.setText(user.getFullName());
         txtEmail.setText(user.getEmail());
@@ -47,12 +55,26 @@ public class UpdateUserFormController {
         cmbRole.setValue(user.getRole());
     }
 
+    public void setUserList(ObservableList<User> userList) {
+        this.userList = userList;
+    }
+
     public void btnUserUpdateOnAction(ActionEvent event) {
+
         try {
             if (txtFullName.getText().isEmpty() || txtEmail.getText().isEmpty() ||
                     txtPhone.getText().isEmpty() || cmbRole.getValue() == null) {
                 AlertUtils.showError("All fields are required!");
                 return;
+            }
+
+            boolean updated = userService.updateUser(user);
+
+            if (updated) {
+                int index = userList.indexOf(user);
+                if (index >= 0) {
+                    userList.set(index, user);
+                }
             }
 
             User user = new User(

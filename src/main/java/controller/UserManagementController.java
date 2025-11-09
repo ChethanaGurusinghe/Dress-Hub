@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import model.dto.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
-import controller.UpdateUserFormController;
 
 
 import java.io.IOException;
@@ -98,7 +97,54 @@ public class UserManagementController {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
+        User selectedUser = (User) tblUser.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Selection");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a user to delete.");
+            alert.show();
+            return;
+        }
 
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirm Delete");
+        confirm.setHeaderText(null);
+        confirm.setContentText("Are you sure you want to delete user " + selectedUser.getFullName() + " (" + selectedUser.getUserId() + ") ?");
+
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.NO);
+        confirm.getButtonTypes().setAll(yes, no);
+
+        Optional<ButtonType> res = confirm.showAndWait();
+        if (res.isPresent() && res.get() == yes) {
+            try {
+                boolean deleted = service.deleteUser(selectedUser.getUserId());
+                if (deleted) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Deleted");
+                    alert.setHeaderText(null);
+                    alert.setContentText("User deleted successfully.");
+                    alert.show();
+
+                    // Remove from ObservableList so TableView updates immediately
+                    userList.remove(selectedUser);
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Delete Failed");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Could not delete user.");
+                    alert.show();
+                }
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Error deleting user: " + e.getMessage());
+                alert.show();
+                e.printStackTrace();
+            }
+        }
     }
 
     Stage edituserStage = new Stage();
@@ -117,7 +163,8 @@ public class UserManagementController {
 
             // Get controller of UpdateUser form
             UpdateUserFormController controller = loader.getController();
-            controller.setUserData(selectedUser); // Pass data
+            controller.setUserData(selectedUser);
+            controller.setUserList(userList);
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -178,9 +225,8 @@ public class UserManagementController {
         colPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phoneNo"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
-        tblUser.refresh();
         loadUserTable();
-
+        tblUser.refresh();
 
         searchTxtFeild.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {

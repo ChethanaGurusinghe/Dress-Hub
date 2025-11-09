@@ -15,6 +15,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addUser(User user) {
+
+        String generatedUsername = generateUsername(user.getFullName());
+        String generatedPassword = generatePassword(user.getFullName());
+
+        user.setUserName(generatedUsername);
+        user.setPassword(generatedPassword);
+
         return userRepository.addUser(user);
     }
 
