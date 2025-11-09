@@ -16,7 +16,7 @@ public class AddProductFormController implements Initializable {
 
     @FXML private TextField txtProductId;
     @FXML private TextField txtProductName;
-    @FXML private ComboBox<String> comboCategory; // fx:id matches FXML
+    @FXML private ComboBox<String> comboCategory;
     @FXML private TextField txtUnitPrice;
     @FXML private TextField txtQuantity;
     @FXML private Button btnAddProduct;

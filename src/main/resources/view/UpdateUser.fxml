@@ -28,31 +28,31 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtEmployeeId" layoutX="458.0" layoutY="226.0" />
+      <TextField fx:id="txtUserId" layoutX="458.0" layoutY="226.0" />
       <Label layoutX="750.0" layoutY="228.0" text="Full Name">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtEmployeeName" layoutX="888.0" layoutY="225.0" prefHeight="26.0" prefWidth="256.0" />
+      <TextField fx:id="txtFullName" layoutX="888.0" layoutY="225.0" prefHeight="26.0" prefWidth="256.0" />
       <Label layoutX="350.0" layoutY="293.0" text="Phone No">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPhoneNo" layoutX="458.0" layoutY="291.0" prefHeight="26.0" prefWidth="182.0" />
+      <TextField fx:id="txtPhone" layoutX="458.0" layoutY="291.0" prefHeight="26.0" prefWidth="182.0" />
       <Label layoutX="750.0" layoutY="293.0" text="Email">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <TextField fx:id="txtEmail" layoutX="888.0" layoutY="290.0" prefHeight="26.0" prefWidth="256.0" />
-      <Button fx:id="btnEmpUpdate" layoutX="669.0" layoutY="513.0" mnemonicParsing="false" onAction="#btnEmpUpdateOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="Update" textFill="WHITE">
+      <Button fx:id="btnUserUpdate" layoutX="669.0" layoutY="513.0" mnemonicParsing="false" onAction="#btnUserUpdateOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="Update" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnEmpCancel" layoutX="843.0" layoutY="513.0" mnemonicParsing="false" onAction="#btnEmpCancelOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="Cancel" textFill="WHITE">
+      <Button fx:id="btnUserCancel" layoutX="843.0" layoutY="513.0" mnemonicParsing="false" onAction="#btnUserCancelOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="Cancel" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
@@ -62,11 +62,11 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="350.0" layoutY="361.0" text="Phone No">
+      <Label layoutX="350.0" layoutY="361.0" text="Role">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboRole" layoutX="457.0" layoutY="359.0" prefWidth="150.0" />
+      <ComboBox fx:id="cmbRole" layoutX="457.0" layoutY="359.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

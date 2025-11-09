@@ -61,7 +61,7 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Text>
-      <TextField fx:id="searchTxtFeild" layoutX="530.0" layoutY="133.0" prefHeight="26.0" prefWidth="262.0" text="Serach by user id" />
+      <TextField fx:id="searchTxtFeild" layoutX="530.0" layoutY="133.0" onAction="#searchTxtFeildOnAction" prefHeight="26.0" prefWidth="262.0" text="Serach by user id" />
       <Button fx:id="btnAddUser" layoutX="1122.0" layoutY="131.0" mnemonicParsing="false" onAction="#btnAddUserOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #E64A19;" text="+ Add User" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />

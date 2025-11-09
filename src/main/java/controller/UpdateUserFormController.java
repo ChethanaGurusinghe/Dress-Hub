@@ -2,46 +2,83 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 import model.dto.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
+import util.AlertUtils;
 
 public class UpdateUserFormController {
 
-    public ComboBox comboRole;
-    UserService service = new UserServiceImpl();
+    @FXML
+    public Button btnUserUpdate;
 
     @FXML
-    private Button btnEmpCancel;
+    public Button btnUserCancel;
 
     @FXML
-    private Button btnEmpUpdate;
+    private TextField txtUserId;
+
+    @FXML
+    private TextField txtFullName;
 
     @FXML
     private TextField txtEmail;
 
     @FXML
-    private TextField txtEmployeeId;
+    private TextField txtPhone;
 
     @FXML
-    private TextField txtEmployeeName;
+    private ComboBox<String> cmbRole;
+
+    UserService userService = new UserServiceImpl();
 
     @FXML
-    private TextField txtPhoneNo;
-
-    @FXML
-    void btnEmpCancelOnAction(ActionEvent event) {
-
+    public void initialize() {
+        cmbRole.getItems().addAll("ADMIN", "EMPLOYEE");
+        txtUserId.setEditable(false);
     }
 
-    @FXML
-    public void btnEmpUpdateOnAction(ActionEvent actionEvent) {
+    public void setUserData(User user) {
+        txtUserId.setText(user.getUserId());
+        txtFullName.setText(user.getFullName());
+        txtEmail.setText(user.getEmail());
+        txtPhone.setText(user.getPhoneNo());
+        cmbRole.setValue(user.getRole());
+    }
 
+    public void btnUserUpdateOnAction(ActionEvent event) {
+        try {
+            if (txtFullName.getText().isEmpty() || txtEmail.getText().isEmpty() ||
+                    txtPhone.getText().isEmpty() || cmbRole.getValue() == null) {
+                AlertUtils.showError("All fields are required!");
+                return;
+            }
+
+            User user = new User(
+                    txtUserId.getText(),
+                    txtFullName.getText(),
+                    txtEmail.getText(),
+                    txtPhone.getText(),
+                    cmbRole.getValue()
+            );
+
+            boolean isUpdated = userService.updateUser(user);
+
+            if (isUpdated) {
+                AlertUtils.showInfo("User updated successfully!");
+                ((Button) event.getSource()).getScene().getWindow().hide();
+            } else {
+                AlertUtils.showError("Failed to update user!");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtils.showError("Error: " + e.getMessage());
+        }
+    }
+
+    public void btnUserCancelOnAction(ActionEvent event) {
+        ((Button) event.getSource()).getScene().getWindow().hide();
     }
 }
-

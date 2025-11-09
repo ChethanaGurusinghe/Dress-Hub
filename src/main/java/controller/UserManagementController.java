@@ -17,6 +17,8 @@ import javafx.stage.Stage;
 import model.dto.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
+import controller.UpdateUserFormController;
+
 
 import java.io.IOException;
 import java.util.List;
@@ -29,7 +31,7 @@ public class UserManagementController {
     public TableView tblUser;
     public TableColumn colRole;
     UserService service = new UserServiceImpl();
-    ObservableList<User> employeeList = FXCollections.observableArrayList();
+    ObservableList<User> userList = FXCollections.observableArrayList();
 
     @FXML
     private Button btnAddProduct;
@@ -102,12 +104,29 @@ public class UserManagementController {
     Stage edituserStage = new Stage();
     @FXML
     void btnEditOnAction(ActionEvent event) {
-        try {
-            edituserStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UpdateUser.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        User selectedUser = (User) tblUser.getSelectionModel().getSelectedItem();
+
+        if (selectedUser == null) {
+            new Alert(Alert.AlertType.WARNING, "Please select a user to edit!").show();
+            return;
         }
-        edituserStage.show();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UpdateUser.fxml"));
+            Parent root = loader.load();
+
+            // Get controller of UpdateUser form
+            UpdateUserFormController controller = loader.getController();
+            controller.setUserData(selectedUser); // Pass data
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Update User");
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -151,4 +170,61 @@ public class UserManagementController {
         }
         addUserStage.show();
     }
+    @FXML
+    public void initialize() {
+
+        colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colEmployeeName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        colPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phoneNo"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        tblUser.refresh();
+        loadUserTable();
+
+
+        searchTxtFeild.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                loadUserTable();
+            } else {
+                List<User> results = service.searchUsers(newValue);
+                userList.clear();
+                userList.addAll(results);
+                tblUser.setItems(userList);
+            }
+        });
+
+    }
+
+    private void loadUserTable() {
+        userList.clear();
+        List<User> users = service.getAllUsers();
+
+        if (users != null) {
+            userList.addAll(users);
+        }
+
+        tblUser.setItems(userList);
+    }
+
+    public void searchTxtFeildOnAction(ActionEvent event) {
+        String keyword = searchTxtFeild.getText().trim();
+
+        if (keyword.isEmpty()) {
+            loadUserTable();
+            return;
+        }
+
+        List<User> results = service.searchUsers(keyword);
+        userList.clear();
+
+        if (!results.isEmpty()) {
+            userList.addAll(results);
+        } else {
+            new Alert(Alert.AlertType.INFORMATION, "No users found!").show();
+        }
+
+        tblUser.setItems(userList);
+    }
+
+
 }

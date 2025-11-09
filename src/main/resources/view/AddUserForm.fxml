@@ -37,25 +37,25 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtProductId" layoutX="448.0" layoutY="216.0" />
+      <TextField fx:id="txtUserId" layoutX="448.0" layoutY="216.0" />
       <Label layoutX="740.0" layoutY="218.0" text="Full Name">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtProductName" layoutX="878.0" layoutY="215.0" prefHeight="26.0" prefWidth="256.0" />
+      <TextField fx:id="txtFullName" layoutX="878.0" layoutY="215.0" prefHeight="26.0" prefWidth="256.0" />
       <Label layoutX="340.0" layoutY="283.0" text="Phone No">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtProductId1" layoutX="448.0" layoutY="281.0" prefHeight="26.0" prefWidth="182.0" />
+      <TextField fx:id="txtPhone" layoutX="448.0" layoutY="281.0" prefHeight="26.0" prefWidth="182.0" />
       <Label layoutX="740.0" layoutY="283.0" text="Email">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtProductName1" layoutX="878.0" layoutY="280.0" prefHeight="26.0" prefWidth="256.0" />
+      <TextField fx:id="txtEmail" layoutX="878.0" layoutY="280.0" prefHeight="26.0" prefWidth="256.0" />
       <Button fx:id="btnAddUser" layoutX="659.0" layoutY="503.0" mnemonicParsing="false" onAction="#btnAddUserOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="ADD" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -71,6 +71,6 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboRole" layoutX="448.0" layoutY="344.0" prefWidth="150.0" />
+      <ComboBox fx:id="cmbRole" layoutX="448.0" layoutY="344.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
