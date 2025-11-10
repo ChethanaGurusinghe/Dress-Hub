@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
 
-    private final ProductRepository repo = new ProductRepositoryImpl();
+    ProductRepository repo = new ProductRepositoryImpl();
 
     @Override
     public boolean addProduct(Product product) throws Exception {
