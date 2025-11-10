@@ -63,6 +63,11 @@ public class AddUserFormController implements Initializable {
 
             if (isSaved) {
                 AlertUtils.showInfo("User added successfully!");
+
+                if (userList != null) {
+                    userList.add(user);
+                }
+
                 ((Button) event.getSource()).getScene().getWindow().hide();
             } else {
                 AlertUtils.showError("Failed to add user!");

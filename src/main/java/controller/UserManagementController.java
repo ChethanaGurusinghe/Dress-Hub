@@ -272,5 +272,4 @@ public class UserManagementController {
         tblUser.setItems(userList);
     }
 
-
 }
