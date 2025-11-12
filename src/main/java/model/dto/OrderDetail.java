@@ -1,21 +1,19 @@
 package model.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
-@NoArgsConstructor
-@ToString
-
 public class OrderDetail {
 
-    private String orderId;
     private String productId;
+    private String productName;
+    private double unitPrice;
     private int orderQty;
 
-    public OrderDetail(String productId, int orderQty) {
-        this.productId = productId;
-        this.orderQty = orderQty;
+    public double getTotal() {
+        return unitPrice * orderQty;
     }
+
 }

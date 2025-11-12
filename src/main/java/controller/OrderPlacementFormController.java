@@ -14,63 +14,39 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import model.dto.Bill;
 import model.dto.OrderDetail;
 import model.dto.Product;
 import service.OrderService;
 import service.impl.OrderServiceImpl;
+import util.InvoiceGenerator;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class OrderPlacementFormController {
 
     @FXML
-    public Button btnInvoicePrint;
+    public Button btnInvoicePrint, btnCancel, btnAddToCart, btnLogOut;
 
     @FXML
-    public Button btnCancel;
+    private TextField txtProductId, txtQuantity, txtOrderId;
 
     @FXML
-    public Button btnAddToCart;
-
-    @FXML
-    public Button btnLogOut;
-
-    @FXML
-    private TextField txtProductId;
-
-    @FXML
-    private TextField txtQuantity;
-
-    @FXML
-    private TextField txtOrderId;
-
-    @FXML
-    private Label lblNetTotal;
-
-    @FXML
-    private Label lblUnitPrice;
-
-    @FXML
-    private Label lblProductName;
+    private Label lblNetTotal, lblUnitPrice, lblProductName;
 
     @FXML
     private TableView<OrderDetail> tblCart;
 
     @FXML
-    private TableColumn<OrderDetail, String> colItemCode;
+    private TableColumn<OrderDetail, String> colItemCode, colName;
 
     @FXML
-    private TableColumn<OrderDetail, String> colName;
-
-    @FXML
-    private TableColumn<OrderDetail, Double> colUnitPrice;
+    private TableColumn<OrderDetail, Double> colUnitPrice, colTotal;
 
     @FXML
     private TableColumn<OrderDetail, Integer> colQuantity;
-
-    @FXML
-    private TableColumn<OrderDetail, Double> colTotal;
 
     private final ObservableList<OrderDetail> cartList = FXCollections.observableArrayList();
     private final OrderService orderService = new OrderServiceImpl();
@@ -78,13 +54,14 @@ public class OrderPlacementFormController {
     @FXML
     public void initialize() {
 
-        btnAddToCart.setDisable(true); // disabled
+        btnAddToCart.setDisable(true);
 
         txtProductId.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 fetchProduct();
             }
         });
+
         // Auto-generate OrderID
         try {
             String orderId = orderService.generateOrderId();
@@ -96,40 +73,15 @@ public class OrderPlacementFormController {
         // Bind TableView to cartList
         tblCart.setItems(cartList);
 
-        // Table column setup
         colItemCode.setCellValueFactory(new PropertyValueFactory<>("productId"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("orderQty"));
-
-        colName.setCellValueFactory(cellData -> {
-            try {
-                Product p = orderService.getProductById(cellData.getValue().getProductId());
-                return new SimpleStringProperty(p != null ? p.getDescription() : "");
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return new SimpleStringProperty("");
-            }
-        });
-
-        colUnitPrice.setCellValueFactory(cellData -> {
-            try {
-                Product p = orderService.getProductById(cellData.getValue().getProductId());
-                return new SimpleDoubleProperty(p != null ? p.getUnitPrice() : 0.0).asObject();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return new SimpleDoubleProperty(0.0).asObject();
-            }
-        });
-
-        colTotal.setCellValueFactory(cellData -> {
-            try {
-                Product p = orderService.getProductById(cellData.getValue().getProductId());
-                double total = (p != null ? p.getUnitPrice() : 0.0) * cellData.getValue().getOrderQty();
-                return new SimpleDoubleProperty(total).asObject();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return new SimpleDoubleProperty(0.0).asObject();
-            }
-        });
+        colName.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        colUnitPrice.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(cellData.getValue().getUnitPrice()).asObject()
+        );
+        colTotal.setCellValueFactory(cellData ->
+                new SimpleDoubleProperty(cellData.getValue().getTotal()).asObject()
+        );
     }
 
     private void fetchProduct() {
@@ -140,7 +92,7 @@ public class OrderPlacementFormController {
             Product product = orderService.getProductById(productId);
             if (product != null) {
                 lblProductName.setText(product.getDescription());
-                lblUnitPrice.setText(String.valueOf(product.getUnitPrice()));
+                lblUnitPrice.setText(String.format("%.2f", product.getUnitPrice()));
                 btnAddToCart.setDisable(false);
             } else {
                 lblProductName.setText("Invalid Product ID");
@@ -182,17 +134,16 @@ public class OrderPlacementFormController {
                 return;
             }
 
-            // Update labels
-            lblProductName.setText(product.getDescription());
-            lblUnitPrice.setText(String.format("%.2f", product.getUnitPrice()));
-
             // Add to cart
-            cartList.add(new OrderDetail(productId, quantity));
+            cartList.add(new OrderDetail(productId, product.getDescription(), product.getUnitPrice(), quantity));
             updateNetTotal();
 
             // Clear input fields
             txtProductId.clear();
             txtQuantity.clear();
+            lblProductName.setText("");
+            lblUnitPrice.setText("");
+            btnAddToCart.setDisable(true);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -200,57 +151,19 @@ public class OrderPlacementFormController {
         }
     }
 
-//    @FXML
-//    private void btnPlaceOrderOnAction(ActionEvent event) {
-//        if (cartList.isEmpty()) {
-//            showAlert(Alert.AlertType.WARNING, "Cart is empty");
-//            return;
-//        }
-//
-//        String orderId = txtOrderId.getText().trim();
-//        if (orderId.isEmpty()) {
-//            showAlert(Alert.AlertType.WARNING, "OrderID is empty");
-//            return;
-//        }
-//
-//        try {
-//            orderService.placeOrder(orderId, cartList);
-//            showAlert(Alert.AlertType.INFORMATION, "Order placed successfully!");
-//
-//            // Clear cart and generate new OrderID
-//            cartList.clear();
-//            updateNetTotal();
-//            txtOrderId.setText(orderService.generateOrderId());
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            showAlert(Alert.AlertType.ERROR, "Failed to place order. Check database constraints.");
-//        }
-//    }
-
     @FXML
     private void btnCancelOnAction(ActionEvent event) {
-        // Clear cart and reset net total
         cartList.clear();
         updateNetTotal();
-        lblProductName.setText("");
-        lblUnitPrice.setText("");
         txtProductId.clear();
         txtQuantity.clear();
+        lblProductName.setText("");
+        lblUnitPrice.setText("");
+        btnAddToCart.setDisable(true);
     }
 
     private void updateNetTotal() {
-        double total = 0.0;
-        for (OrderDetail od : cartList) {
-            try {
-                Product p = orderService.getProductById(od.getProductId());
-                if (p != null) {
-                    total += p.getUnitPrice() * od.getOrderQty();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        double total = cartList.stream().mapToDouble(OrderDetail::getTotal).sum();
         lblNetTotal.setText(String.format("%.2f", total));
     }
 
@@ -268,35 +181,54 @@ public class OrderPlacementFormController {
 
     @FXML
     public void btnInvoicePrintOnAction(ActionEvent event) {
+        handlePrintInvoice(event);
     }
 
     private void handleLogout(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Logout Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to logout?");
-
-        ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(yesButton, noButton);
-
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to logout?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait().ifPresent(response -> {
-            if (response == yesButton) {
+            if (response == ButtonType.YES) {
                 try {
-                    // Load LoginForm.fxml
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginForm.fxml"));
                     Parent root = loader.load();
-
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.setScene(new Scene(root));
                     stage.centerOnScreen();
                     stage.setTitle("Login");
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-            // If "No" is selected, do nothing
         });
     }
+
+    private void handlePrintInvoice(ActionEvent event) {
+        try {
+            String orderId = txtOrderId.getText().trim();
+
+            // Check if order exists first
+            if (!orderService.isOrderExists(orderId)) {
+                showAlert(Alert.AlertType.ERROR, "Order ID does not exist in orders table!");
+                return;
+            }
+
+            BillController billController = new BillController();
+
+            boolean saved = billController.createBill(orderId);
+
+            if (saved) {
+                double totalAmount = cartList.stream().mapToDouble(OrderDetail::getTotal).sum();
+                InvoiceGenerator.generateInvoice(billController.generateInvoiceNo(), orderId, cartList, totalAmount);
+                new Alert(Alert.AlertType.INFORMATION, "Invoice printed successfully!").show();
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Failed to create bill in DB");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error generating invoice!");
+        }
+    }
+
+
 }

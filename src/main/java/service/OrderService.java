@@ -16,4 +16,6 @@ public interface OrderService {
 
     // Generate a new Order ID (O001, O002, etc.)
     String generateOrderId() throws SQLException;
+
+    boolean isOrderExists(String orderId);
 }

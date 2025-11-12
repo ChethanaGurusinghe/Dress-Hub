@@ -22,28 +22,57 @@ import java.util.Optional;
 public class ProductManagementController {
 
     public Button btnUserManagement;
-    // Sidebar buttons (fx:id must match your FXML)
-    @FXML private Button btnAdminDashboard;
-    @FXML private Button btnProductManagement;
-    @FXML private Button btnEmployeeManagement;
-    @FXML private Button btnSupplierManagement;
-    @FXML private Button btnAdminManagement;
-    @FXML private Button btnCategoryManagement;
-    @FXML private Button btnLogOut;
 
-    // Product controls
-    @FXML private Button btnAddProduct;
-    @FXML private Button btnEdit;
-    @FXML private Button btnDelete;
+    @FXML
+    private Button btnAdminDashboard;
 
-    @FXML private TextField searchTxtFeild;
+    @FXML
+    private Button btnProductManagement;
 
-    @FXML private TableView<Product> tblProducts;
-    @FXML private TableColumn<Product, String> colProductId;
-    @FXML private TableColumn<Product, String> colProductName;
-    @FXML private TableColumn<Product, String> colCategory;
-    @FXML private TableColumn<Product, Double> colUnitPrice;
-    @FXML private TableColumn<Product, Integer> colQtyInInventory;
+    @FXML
+    private Button btnEmployeeManagement;
+
+    @FXML
+    private Button btnSupplierManagement;
+
+    @FXML
+    private Button btnAdminManagement;
+
+    @FXML
+    private Button btnCategoryManagement;
+
+    @FXML
+    private Button btnLogOut;
+
+    @FXML
+    private Button btnAddProduct;
+
+    @FXML
+    private Button btnEdit;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private TextField searchTxtFeild;
+
+    @FXML
+    private TableView<Product> tblProducts;
+
+    @FXML
+    private TableColumn<Product, String> colProductId;
+
+    @FXML
+    private TableColumn<Product, String> colProductName;
+
+    @FXML
+    private TableColumn<Product, String> colCategory;
+
+    @FXML
+    private TableColumn<Product, Double> colUnitPrice;
+
+    @FXML
+    private TableColumn<Product, Integer> colQtyInInventory;
 
     private final ProductService service = new ProductServiceImpl();
     private final ObservableList<Product> productList = FXCollections.observableArrayList();

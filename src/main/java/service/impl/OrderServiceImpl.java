@@ -49,4 +49,9 @@ public class OrderServiceImpl implements OrderService {
     public String generateOrderId() throws SQLException {
         return orderRepo.generateOrderId();
     }
+
+    @Override
+    public boolean isOrderExists(String orderId) {
+        return orderRepo.getOrderById(orderId) != null;
+    }
 }
