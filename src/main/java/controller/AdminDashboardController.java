@@ -5,10 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
-
+        //current page
     }
 
     private void loadDashboardData() {
@@ -100,29 +101,6 @@ public class AdminDashboardController implements Initializable {
     }
 
 
-
-//    private void loadSalesChart() {
-//        XYChart.Series<String, Number> series = new XYChart.Series<>();
-//        series.setName("Sales by Category");
-//
-//        try (Connection con = DBConnection.getInstance().getConnection()) {
-//            String sql = "SELECT category, SUM(quantity) AS total FROM orders GROUP BY category";
-//            PreparedStatement pst = con.prepareStatement(sql);
-//            ResultSet rs = pst.executeQuery();
-//
-//            while (rs.next()) {
-//                series.getData().add(new XYChart.Data<>(rs.getString("category"), rs.getInt("total")));
-//            }
-//
-//            salesChart.getData().clear();
-//            salesChart.getData().add(series);
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     Stage categorySatge = new Stage();
     @FXML
     void btnCategoryManagementOnAction(ActionEvent event) {
@@ -137,10 +115,8 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     void btnLogOutOnAction(ActionEvent event) {
-
+        handleLogout(event);
     }
-
-
 
     Stage supplierStage = new Stage();
     @FXML
@@ -186,5 +162,35 @@ public class AdminDashboardController implements Initializable {
             throw new RuntimeException(e);
         }
         userStage.show();
+    }
+
+    private void handleLogout(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to logout?");
+
+        ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yesButton, noButton);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == yesButton) {
+                try {
+                    // Load LoginForm.fxml
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginForm.fxml"));
+                    Parent root = loader.load();
+
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.centerOnScreen();
+                    stage.setTitle("Login");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            // If "No" is selected, do nothing
+        });
     }
 }

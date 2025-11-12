@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -35,14 +36,12 @@ public class CategoryManagementController {
     @FXML private Button btnCategoryManagement;
     @FXML private Button btnLogOut;
 
-    // Category management buttons (fx:id's must match FXML)
     @FXML private Button btnAddCategory;
     @FXML private Button btnEdit;
     @FXML private Button btnDelete;
 
     @FXML private TextField searchTxtFeild;
 
-    // Table (IMPORTANT: fx:id in FXML is "tblCategory", so name must match)
     @FXML private TableView<Category> tblCategory;
     @FXML private TableColumn<Category, String> colCategoryId;
     @FXML private TableColumn<Category, String> colCategoryName;
@@ -111,7 +110,6 @@ public class CategoryManagementController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UpdateCategoryForm.fxml"));
             Parent root = loader.load();
 
-            // controller must expose setCategoryData(Category)
             UpdateCategoryFormController ctrl = loader.getController();
             ctrl.setCategoryData(selected);
 
@@ -161,7 +159,6 @@ public class CategoryManagementController {
         }
     }
 
-    // open modal form; owner set to calling button (btnAddCategory must exist in scene)
     private void openFormModal(String fxml, String title) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Stage stage = new Stage();
@@ -175,7 +172,6 @@ public class CategoryManagementController {
         refreshTable();
     }
 
-    // Sidebar navigation handlers — names must match FXML onAction attributes
     public void btnAdminDashboardOnAction(ActionEvent event) {
         navigate(event, "/view/AdminDashboard.fxml", "Dashboard");
     }
@@ -193,17 +189,14 @@ public class CategoryManagementController {
     }
 
     public void btnCategoryManagementOnAction(ActionEvent event) {
-        // we are here already — just refresh table
+        //current page;
         refreshTable();
     }
 
     public void btnLogOutOnAction(ActionEvent event) {
-        // close current window
-        Stage current = (Stage) ((Button) event.getSource()).getScene().getWindow();
-        current.close();
+        handleLogout(event);
     }
 
-    // helper to open new window and close current
     private void navigate(ActionEvent event, String fxml, String title) {
         try {
             Stage stage = new Stage();
@@ -211,7 +204,6 @@ public class CategoryManagementController {
             stage.setTitle(title);
             stage.show();
 
-            // close current window safely
             if (event != null && event.getSource() instanceof Button) {
                 Stage current = (Stage) ((Button) event.getSource()).getScene().getWindow();
                 current.close();
@@ -222,13 +214,43 @@ public class CategoryManagementController {
         }
     }
 
-    // Alert utility
+    // Alert
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void handleLogout(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to logout?");
+
+        ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yesButton, noButton);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == yesButton) {
+                try {
+                    // Load LoginForm.fxml
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginForm.fxml"));
+                    Parent root = loader.load();
+
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.centerOnScreen();
+                    stage.setTitle("Login");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            // If "No" is selected, do nothing
+        });
     }
 
 }

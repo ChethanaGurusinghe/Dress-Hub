@@ -67,14 +67,14 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <TableView fx:id="tblSupplier" layoutX="496.0" layoutY="212.0" prefHeight="402.0" prefWidth="846.0">
+      <TableView fx:id="tblSupplier" layoutX="471.0" layoutY="208.0" prefHeight="402.0" prefWidth="954.0">
         <columns>
           <TableColumn fx:id="colSupplierId" prefWidth="94.4000244140625" text="SupplierID" />
           <TableColumn fx:id="colCompanyName" prefWidth="159.2000732421875" text="Company Name" />
             <TableColumn fx:id="colSupplierName" prefWidth="136.0" text="Supplier Name" />
             <TableColumn fx:id="colPhoneNo" prefWidth="119.20001220703125" text="PhoneNo" />
             <TableColumn fx:id="colEmail" prefWidth="169.5999755859375" text="Email" />
-            <TableColumn fx:id="colNotes" prefWidth="171.2000732421875" text="Notes" />
+            <TableColumn fx:id="colNotes" prefWidth="272.8000244140625" text="Notes" />
         </columns>
       </TableView>
       <Button fx:id="btnEdit" layoutX="1016.0" layoutY="678.0" mnemonicParsing="false" onAction="#btnEditOnAction" prefHeight="31.0" prefWidth="115.0" style="-fx-background-color: #35BD2C;" text="Edit" textFill="WHITE">

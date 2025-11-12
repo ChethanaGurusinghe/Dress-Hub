@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -147,7 +148,6 @@ public class SupplierManagementController {
         }
     }
 
-    // --- Other navigation buttons (optional links to other pages) ---
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
         openNewWindow("/view/AdminDashboard.fxml", "Admin Dashboard");
@@ -175,7 +175,7 @@ public class SupplierManagementController {
 
     @FXML
     void btnLogOutOnAction(ActionEvent event) {
-        ((Stage) btnLogOut.getScene().getWindow()).close();
+        handleLogout(event);
     }
 
     private void openNewWindow(String fxmlPath, String title) {
@@ -230,5 +230,34 @@ public class SupplierManagementController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    private void handleLogout(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to logout?");
+
+        ButtonType yesButton = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(yesButton, noButton);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == yesButton) {
+                try {
+                    // Load LoginForm.fxml
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginForm.fxml"));
+                    Parent root = loader.load();
+
+                    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    stage.setScene(new Scene(root));
+                    stage.centerOnScreen();
+                    stage.setTitle("Login");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            // If "No" is selected, do nothing
+        });
     }
 }
