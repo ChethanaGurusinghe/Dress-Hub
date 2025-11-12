@@ -86,4 +86,27 @@ public class ProductRepositoryImpl implements ProductRepository {
         }
         return null;
     }
-}
+
+    @Override
+    public Product getProductById(String productId) throws SQLException {
+            Connection con = DBConnection.getInstance().getConnection();
+            String sql = "SELECT * FROM product WHERE product_id=?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, productId);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                return new Product(
+                        rs.getString("product_id"),
+                        rs.getString("description"),
+                        rs.getDouble("unit_price"),
+                        rs.getInt("quantity"),
+                        rs.getString("category_id"),
+                        rs.getString("supplier_id")
+                );
+            }
+            return null;
+        }
+    }
+
+

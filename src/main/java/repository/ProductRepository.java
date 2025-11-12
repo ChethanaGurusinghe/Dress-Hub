@@ -10,4 +10,5 @@ public interface ProductRepository {
     boolean deleteProduct(String productId) throws SQLException;
     List<Product> getAllProducts() throws SQLException;
     Product searchProduct(String productId) throws SQLException;
+    Product getProductById(String productId) throws SQLException;
 }

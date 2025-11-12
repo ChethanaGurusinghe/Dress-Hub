@@ -60,27 +60,27 @@
       </Button>
       <Label fx:id="lblProductName" layoutX="745.0" layoutY="220.0" text="ProductName" />
       <Label fx:id="lblUnitPrice" layoutX="747.0" layoutY="259.0" text="UnitPrice" />
-      <TableView fx:id="tblCart" layoutX="511.0" layoutY="485.0" prefHeight="200.0" prefWidth="520.0">
+      <TableView fx:id="tblCart" layoutX="511.0" layoutY="461.0" prefHeight="200.0" prefWidth="520.0">
         <columns>
-          <TableColumn prefWidth="96.79998779296875" text="Item Code" />
-          <TableColumn prefWidth="104.800048828125" text="Name" />
-            <TableColumn prefWidth="104.800048828125" text="Unit Price(Rs)" />
-            <TableColumn prefWidth="104.800048828125" text="Quantity" />
-            <TableColumn prefWidth="104.800048828125" text="Total" />
+          <TableColumn fx:id="colItemCode" prefWidth="96.79998779296875" text="Item Code" />
+          <TableColumn fx:id="colName" prefWidth="104.800048828125" text="Name" />
+            <TableColumn fx:id="colUnitPrice" prefWidth="104.800048828125" text="Unit Price(Rs)" />
+            <TableColumn fx:id="colQuantity" prefWidth="104.800048828125" text="Quantity" />
+            <TableColumn fx:id="colTotal" prefWidth="104.800048828125" text="Total" />
         </columns>
       </TableView>
-      <Label layoutX="540.0" layoutY="442.0" text="OrderID">
+      <Label layoutX="540.0" layoutY="411.0" text="OrderID">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtOrderId" layoutX="614.0" layoutY="442.0" prefHeight="26.0" prefWidth="106.0" />
-      <Label layoutX="872.0" layoutY="700.0" text="Net Total :">
+      <TextField fx:id="txtOrderId" layoutX="614.0" layoutY="409.0" prefHeight="26.0" prefWidth="106.0" />
+      <Label layoutX="872.0" layoutY="689.0" text="Net Total :">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lblNetTotal" layoutX="978.0" layoutY="698.0" text="0.00">
+      <Label fx:id="lblNetTotal" layoutX="978.0" layoutY="688.0" text="0.00">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -91,11 +91,6 @@
          </font>
       </Button>
       <Button fx:id="btnCancel" layoutX="937.0" layoutY="740.0" mnemonicParsing="false" onAction="#btnCancelOnAction" prefHeight="26.0" prefWidth="82.0" style="-fx-background-color: #E64A19;" text="Cancel" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnPlaceOrder" layoutX="718.0" layoutY="387.0" mnemonicParsing="false" onAction="#btnPlaceOrderOnAction" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: #E64A19;" text="Place Order" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
