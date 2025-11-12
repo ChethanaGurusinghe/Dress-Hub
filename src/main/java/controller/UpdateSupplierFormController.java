@@ -14,17 +14,20 @@ import static util.AlertUtils.showAlert;
 
 public class UpdateSupplierFormController {
 
-    SupplierRepository repo = new SupplierRepositoryImpl();
-
+    private final SupplierRepository repo = new SupplierRepositoryImpl();
     private Supplier currentSupplier;
-    @FXML
-    private Button btnCancelSupplier;
 
     @FXML
-    private Button btnUpdateSupplier;
+    private TextField txtSupplierId;
 
     @FXML
     private TextField txtCompanyName;
+
+    @FXML
+    private TextField txtSupplierName;
+
+    @FXML
+    private TextField txtPhoneNo;
 
     @FXML
     private TextField txtEmail;
@@ -33,14 +36,10 @@ public class UpdateSupplierFormController {
     private TextField txtNotes;
 
     @FXML
-    private TextField txtPhoneNo;
+    private Button btnUpdateSupplier;
 
     @FXML
-    private TextField txtSupplierId;
-
-    @FXML
-    private TextField txtSupplierName;
-    private Supplier supplier;
+    private Button btnCancelSupplier;
 
     @FXML
     void btnCancelSupplierOnAction(ActionEvent event) {
@@ -49,11 +48,16 @@ public class UpdateSupplierFormController {
 
     @FXML
     void btnUpdateSupplierOnAction(ActionEvent event) {
-        currentSupplier.setCompName(txtCompanyName.getText());
-        currentSupplier.setSupName(txtSupplierName.getText());
-        currentSupplier.setPhone(txtPhoneNo.getText());
-        currentSupplier.setEmail(txtEmail.getText());
-        currentSupplier.setNotes(txtNotes.getText());
+        if (currentSupplier == null) {
+            showAlert(Alert.AlertType.ERROR, "Error", "No supplier selected.");
+            return;
+        }
+
+        currentSupplier.setCompName(txtCompanyName.getText().trim());
+        currentSupplier.setSupName(txtSupplierName.getText().trim());
+        currentSupplier.setPhone(txtPhoneNo.getText().trim());
+        currentSupplier.setEmail(txtEmail.getText().trim());
+        currentSupplier.setNotes(txtNotes.getText().trim());
 
         try {
             if (repo.updateSupplier(currentSupplier)) {
@@ -67,27 +71,19 @@ public class UpdateSupplierFormController {
         }
     }
 
-    private void closeForm() {
-        ((Stage) txtSupplierId.getScene().getWindow()).close();
-    }
-
     public void setSupplier(Supplier selected) {
-
-        this.currentSupplier = supplier;
-        txtSupplierId.setText(supplier.getSupCode());
-        txtCompanyName.setText(supplier.getCompName());
-        txtSupplierName.setText(supplier.getSupName());
-        txtPhoneNo.setText(supplier.getPhone());
-        txtEmail.setText(supplier.getEmail());
-        txtNotes.setText(supplier.getNotes());
+        this.currentSupplier = selected;
+        txtSupplierId.setText(selected.getSupCode());
+        txtCompanyName.setText(selected.getCompName());
+        txtSupplierName.setText(selected.getSupName());
+        txtPhoneNo.setText(selected.getPhone());
+        txtEmail.setText(selected.getEmail());
+        txtNotes.setText(selected.getNotes());
         txtSupplierId.setEditable(false);
     }
 
-    private void showAlert(Alert.AlertType type, String title, String msg) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
+    private void closeForm() {
+        Stage stage = (Stage) txtSupplierId.getScene().getWindow();
+        stage.close();
     }
 }

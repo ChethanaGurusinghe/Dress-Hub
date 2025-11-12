@@ -22,13 +22,44 @@ import static util.AlertUtils.showAlert;
 
 public class SupplierManagementController {
 
-    public TextField txtSearch;
-    SupplierRepository repo = new SupplierRepositoryImpl();
+    @FXML
+    private TextField txtSearch;
 
-    public TableView tblSupplier;
-    public Button btnUserManagement;
+    @FXML
+    private TableView<Supplier> tblSupplier;
+
+    @FXML
+    private TableColumn<Supplier, String> colSupplierId;
+
+    @FXML
+    private TableColumn<Supplier, String> colCompanyName;
+
+    @FXML
+    private TableColumn<Supplier, String> colSupplierName;
+
+    @FXML
+    private TableColumn<Supplier, String> colPhoneNo;
+
+    @FXML
+    private TableColumn<Supplier, String> colEmail;
+
+    @FXML
+    private TableColumn<Supplier, String> colNotes;
+
     @FXML
     private Button btnAddSupplier;
+
+    @FXML
+    private Button btnEdit;
+
+    @FXML
+    private Button btnDelete;
+
+    @FXML
+    private Button btnUserManagement;
+
+    @FXML
+    private Button btnCategoryManagement;
 
     @FXML
     private Button btnAdminDashboard;
@@ -37,19 +68,7 @@ public class SupplierManagementController {
     private Button btnAdminManagement;
 
     @FXML
-    private Button btnCategoryManagement;
-
-    @FXML
-    private Button btnDelete;
-
-    @FXML
-    private Button btnEdit;
-
-    @FXML
     private Button btnEmployeeManagement;
-
-    @FXML
-    private Button btnLogOut;
 
     @FXML
     private Button btnProductManagement;
@@ -58,67 +77,52 @@ public class SupplierManagementController {
     private Button btnSupplierManagement;
 
     @FXML
-    private TableColumn<?, ?> colCompanyName;
+    private Button btnLogOut;
 
-    @FXML
-    private TableColumn<?, ?> colEmail;
+    private final SupplierRepository repo = new SupplierRepositoryImpl();
 
-    @FXML
-    private TableColumn<?, ?> colNotes;
-
-    @FXML
-    private TableColumn<?, ?> colPhoneNo;
-
-    @FXML
-    private TableColumn<?, ?> colSupplierId;
-
-    @FXML
-    private TableColumn<?, ?> colSupplierName;
-
-    @FXML
-    private TextField searchTxtFeild;
-
-    Stage addSupplierStage = new Stage();
+    // --- Navigation buttons ---
     @FXML
     void btnAddSupplierOnAction(ActionEvent event) {
-        Stage stage = new Stage();
-        Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/view/AddSupplierForm.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/view/AddSupplierForm.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Add Supplier");
+            stage.showAndWait();
+            loadTable();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        stage.setScene(new Scene(root));
-        stage.setTitle("Add Supplier");
-        stage.showAndWait();
-        loadTable();
     }
 
-    Stage adminDashboardStage = new Stage();
     @FXML
-    void btnAdminDashboardOnAction(ActionEvent event) {
-        try {
-            adminDashboardStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/AdminDashboard.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    void btnEditOnAction(ActionEvent event) {
+        Supplier selected = tblSupplier.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a supplier to update.");
+            return;
         }
-        adminDashboardStage.show();
-    }
 
-    Stage categorySatge = new Stage();
-    @FXML
-    void btnCategoryManagementOnAction(ActionEvent event) {
         try {
-            categorySatge.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/CategoryManagement.fxml"))));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UpdateSupplierForm.fxml"));
+            Parent root = loader.load();
+            UpdateSupplierFormController controller = loader.getController();
+            controller.setSupplier(selected);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Update Supplier");
+            stage.showAndWait();
+            loadTable();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        categorySatge.show();
     }
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        Supplier selected = (Supplier) tblSupplier.getSelectionModel().getSelectedItem();
+        Supplier selected = tblSupplier.getSelectionModel().getSelectedItem();
         if (selected == null) {
             showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a supplier to delete.");
             return;
@@ -126,9 +130,10 @@ public class SupplierManagementController {
 
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Confirm Delete");
-        confirm.setContentText("Are you sure you want to delete supplier " + selected.getSupCode() + " ?");
-        Optional<ButtonType> res = confirm.showAndWait();
-        if (res.isPresent() && res.get() == ButtonType.OK) {
+        confirm.setContentText("Are you sure you want to delete supplier " + selected.getSupCode() + "?");
+        Optional<ButtonType> result = confirm.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             try {
                 if (repo.deleteSupplier(selected.getSupCode())) {
                     showAlert(Alert.AlertType.INFORMATION, "Deleted", "Supplier deleted successfully.");
@@ -142,65 +147,51 @@ public class SupplierManagementController {
         }
     }
 
-    Stage editSupplierStage = new Stage();
+    // --- Other navigation buttons (optional links to other pages) ---
     @FXML
-    void btnEditOnAction(ActionEvent event) {
-        Supplier selected = (Supplier) tblSupplier.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            showAlert(Alert.AlertType.WARNING, "No Selection", "Please select a supplier to update.");
-            return;
-        }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/UpdateSupplierForm.fxml"));
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        UpdateSupplierFormController controller = loader.getController();
-        controller.setSupplier(selected);
-
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Update Supplier");
-        stage.showAndWait();
-        loadTable();
+    void btnAdminDashboardOnAction(ActionEvent event) {
+        openNewWindow("/view/AdminDashboard.fxml", "Admin Dashboard");
     }
 
-
     @FXML
-    void btnLogOutOnAction(ActionEvent event) {
-
+    void btnCategoryManagementOnAction(ActionEvent event) {
+        openNewWindow("/view/CategoryManagement.fxml", "Category Management");
     }
 
-    Stage productManagementstage = new Stage();
     @FXML
     void btnProdutManagementOnAction(ActionEvent event) {
+        openNewWindow("/view/ProductManagement.fxml", "Product Management");
+    }
 
-        try {
-            productManagementstage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/ProductManagement.fxml"))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        productManagementstage.show();
+    @FXML
+    void btnUserManagementOnAction(ActionEvent event) {
+        openNewWindow("/view/UserManagement.fxml", "User Management");
     }
 
     @FXML
     void btnSupplierManagementOnAction(ActionEvent event) {
-
+        // current page
     }
 
-    Stage userStage = new Stage();
-    public void btnUserManagementOnAction(ActionEvent actionEvent) {
+    @FXML
+    void btnLogOutOnAction(ActionEvent event) {
+        ((Stage) btnLogOut.getScene().getWindow()).close();
+    }
+
+    private void openNewWindow(String fxmlPath, String title) {
         try {
-            userStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/UserManagement.fxml"))));
+            Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle(title);
+            stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
-        userStage.show();
     }
 
+    // --- Initialize ---
+    @FXML
     public void initialize() {
         colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supCode"));
         colCompanyName.setCellValueFactory(new PropertyValueFactory<>("compName"));
@@ -208,6 +199,7 @@ public class SupplierManagementController {
         colPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+
         loadTable();
     }
 
@@ -220,7 +212,8 @@ public class SupplierManagementController {
         }
     }
 
-    public void txtSearchOnAction(ActionEvent event) {
+    @FXML
+    void txtSearchOnAction(ActionEvent event) {
         String code = txtSearch.getText().trim();
         if (code.isEmpty()) {
             loadTable();
@@ -228,22 +221,14 @@ public class SupplierManagementController {
         }
 
         try {
-            Supplier s = repo.searchSupplier(code);
-            if (s != null) {
-                tblSupplier.setItems(FXCollections.observableArrayList(s));
+            Supplier supplier = repo.searchSupplier(code);
+            if (supplier != null) {
+                tblSupplier.setItems(FXCollections.observableArrayList(supplier));
             } else {
                 showAlert(Alert.AlertType.INFORMATION, "Not Found", "No supplier found for code: " + code);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private void showAlert(Alert.AlertType type, String title, String msg) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 }

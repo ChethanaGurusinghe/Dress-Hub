@@ -1,6 +1,5 @@
 package service.impl;
 
-
 import model.dto.Supplier;
 import repository.SupplierRepository;
 import repository.impl.SupplierRepositoryImpl;
@@ -11,7 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SupplierServiceImpl {
+public class SupplierServiceImpl implements SupplierService{
 
     SupplierRepository supplierRepository = new SupplierRepositoryImpl();
 

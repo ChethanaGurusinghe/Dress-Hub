@@ -21,7 +21,7 @@ public class SupplierRepositoryImpl implements SupplierRepository{
             ps.setString(3, supplier.getSupName());
             ps.setString(4, supplier.getPhone());
             ps.setString(5, supplier.getEmail());
-            ps.setString(7, supplier.getNotes());
+            ps.setString(6, supplier.getNotes());
 
             return ps.executeUpdate() > 0;
         }
@@ -37,8 +37,8 @@ public class SupplierRepositoryImpl implements SupplierRepository{
             ps.setString(2, supplier.getSupName());
             ps.setString(3, supplier.getPhone());
             ps.setString(4, supplier.getEmail());
-            ps.setString(6, supplier.getNotes());
-            ps.setString(7, supplier.getSupCode());
+            ps.setString(5, supplier.getNotes());
+            ps.setString(6, supplier.getSupCode());
 
             return ps.executeUpdate() > 0;
         }
