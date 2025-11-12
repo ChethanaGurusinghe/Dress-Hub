@@ -15,6 +15,9 @@ import java.io.IOException;
 public class OrderPlacementFormController {
 
     @FXML
+    public Button btnPlaceOrder;
+
+    @FXML
     private Button btnAddToCart;
 
     @FXML
@@ -73,4 +76,7 @@ public class OrderPlacementFormController {
 
     }
 
+    @FXML
+    public void btnPlaceOrderOnAction(ActionEvent event) {
+    }
 }
