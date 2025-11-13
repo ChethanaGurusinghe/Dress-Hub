@@ -1,38 +1,23 @@
 package repository.impl;
 
-import model.dto.OrderDetail;
-import repository.OrderRepository;
 import db.DBConnection;
+import repository.OrderRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 public class OrderRepositoryImpl implements OrderRepository {
-
-//    @Override
-//    public void saveOrderDetails(List<OrderDetail> orderDetails) throws SQLException {
-//        Connection con = DBConnection.getInstance().getConnection();
-//        String sql = "INSERT INTO orderdetail(order_id, product_id, orderQty) VALUES (?,?,?)";
-//        PreparedStatement pst = con.prepareStatement(sql);
-//        for (OrderDetail od : orderDetails){
-//            pst.setString(1, od.getOrderId());
-//            pst.setString(2, od.getProductId());
-//            pst.setInt(3, od.getOrderQty());
-//            pst.addBatch();
-//        }
-//        pst.executeBatch();
-//    }
 
     @Override
     public String generateOrderId() throws SQLException {
         Connection con = DBConnection.getInstance().getConnection();
-        String sql = "SELECT order_id FROM orderdetail ORDER BY order_id DESC LIMIT 1";
+        String sql = "SELECT order_id FROM orders ORDER BY order_id DESC LIMIT 1";
         PreparedStatement pst = con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
-        if(rs.next()){
+
+        if (rs.next()) {
             String lastId = rs.getString("order_id");
             int num = Integer.parseInt(lastId.substring(1)) + 1;
             return String.format("O%03d", num);
@@ -59,5 +44,15 @@ public class OrderRepositoryImpl implements OrderRepository {
         pst.setString(2, productId);
         pst.setInt(3, orderQty);
         pst.executeUpdate();
+    }
+
+    @Override
+    public boolean getOrderById(String orderId) throws SQLException {
+        Connection conn = DBConnection.getInstance().getConnection();
+        String sql = "SELECT order_id FROM orders WHERE order_id = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, orderId);
+        ResultSet rs = ps.executeQuery();
+        return rs.next();
     }
 }

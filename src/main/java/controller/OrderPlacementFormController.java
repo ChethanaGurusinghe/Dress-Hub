@@ -109,6 +109,7 @@ public class OrderPlacementFormController {
     private void btnAddToCartOnAction(ActionEvent event) {
         String productId = txtProductId.getText().trim();
         String qtyText = txtQuantity.getText().trim();
+        String orderId = txtOrderId.getText().trim();
 
         if (productId.isEmpty() || qtyText.isEmpty()) {
             showAlert(Alert.AlertType.WARNING, "Please enter Product ID and Quantity");
@@ -134,8 +135,14 @@ public class OrderPlacementFormController {
                 return;
             }
 
-            // Add to cart
-            cartList.add(new OrderDetail(productId, product.getDescription(), product.getUnitPrice(), quantity));
+            cartList.add(new OrderDetail(
+                    orderId,
+                    productId,
+                    product.getDescription(),
+                    product.getUnitPrice(),
+                    quantity
+            ));
+
             updateNetTotal();
 
             // Clear input fields
@@ -206,22 +213,32 @@ public class OrderPlacementFormController {
         try {
             String orderId = txtOrderId.getText().trim();
 
-            // Check if order exists first
+            // Compute total amount
+            double totalAmount = cartList.stream().mapToDouble(OrderDetail::getTotal).sum();
+
+            // Save order if not exists
             if (!orderService.isOrderExists(orderId)) {
-                showAlert(Alert.AlertType.ERROR, "Order ID does not exist in orders table!");
-                return;
+                boolean orderSaved = orderService.saveOrder(orderId, totalAmount);
+                if (!orderSaved) {
+                    showAlert(Alert.AlertType.ERROR, "Failed to save order in DB!");
+                    return;
+                }
+
+                for (OrderDetail od : cartList) {
+                    orderService.saveOrderDetail(orderId, od.getProductId(), od.getOrderQty());
+                }
             }
 
+            // Create bill
             BillController billController = new BillController();
+            boolean billSaved = billController.createBill(orderId);
 
-            boolean saved = billController.createBill(orderId);
-
-            if (saved) {
-                double totalAmount = cartList.stream().mapToDouble(OrderDetail::getTotal).sum();
-                InvoiceGenerator.generateInvoice(billController.generateInvoiceNo(), orderId, cartList, totalAmount);
-                new Alert(Alert.AlertType.INFORMATION, "Invoice printed successfully!").show();
+            if (billSaved) {
+                String invoiceNo = billController.generateInvoiceNo();
+                InvoiceGenerator.generateInvoice(invoiceNo, orderId, cartList, totalAmount);
+                new Alert(Alert.AlertType.INFORMATION, "✅ Invoice printed successfully!").show();
             } else {
-                showAlert(Alert.AlertType.ERROR, "Failed to create bill in DB");
+                showAlert(Alert.AlertType.ERROR, "Failed to create bill in DB!");
             }
 
         } catch (Exception e) {
@@ -229,6 +246,5 @@ public class OrderPlacementFormController {
             showAlert(Alert.AlertType.ERROR, "Error generating invoice!");
         }
     }
-
 
 }

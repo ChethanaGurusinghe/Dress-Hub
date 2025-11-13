@@ -23,23 +23,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void placeOrder(String orderId, List<OrderDetail> cartList) throws SQLException {
-
-        // 1️⃣ Calculate net total
-        double netTotal = 0.0;
+        double netTotal = 0;
         for (OrderDetail od : cartList) {
             Product p = productRepo.getProductById(od.getProductId());
-            if (p != null) {
-                netTotal += p.getUnitPrice() * od.getOrderQty();
-            }
+            if (p != null) netTotal += p.getUnitPrice() * od.getOrderQty();
         }
 
-        // 2️⃣ Save order in 'orders' table first (important for FK)
-        boolean orderSaved = orderRepo.saveOrder(orderId, netTotal);
-        if (!orderSaved) {
+        if (!orderRepo.saveOrder(orderId, netTotal)) {
             throw new SQLException("Failed to save order with ID " + orderId);
         }
 
-        // 3️⃣ Save each order detail in 'orderdetail' table
         for (OrderDetail od : cartList) {
             orderRepo.saveOrderDetail(orderId, od.getProductId(), od.getOrderQty());
         }
@@ -51,7 +44,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean isOrderExists(String orderId) {
-        return orderRepo.getOrderById(orderId) != null;
+    public boolean isOrderExists(String orderId) throws SQLException {
+        return orderRepo.getOrderById(orderId);
+    }
+
+    @Override
+    public void saveOrderDetail(String orderId, String productId, int orderQty) throws SQLException {
+        orderRepo.saveOrderDetail(orderId, productId, orderQty);
+    }
+
+    @Override
+    public boolean saveOrder(String orderId, double netTotal) throws SQLException {
+        return orderRepo.saveOrder(orderId, netTotal);
     }
 }
