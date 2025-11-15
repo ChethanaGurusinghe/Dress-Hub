@@ -54,6 +54,8 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private BarChart<String, Number> salesChart;
+
+    @FXML
     private EventObject event;
 
     @FXML
@@ -131,7 +133,9 @@ public class AdminDashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         loadDashboardData();
+        loadSalesChart();
     }
 
     Stage productStage = new Stage();
@@ -193,4 +197,46 @@ public class AdminDashboardController implements Initializable {
             // If "No" is selected, do nothing
         });
     }
+
+    private void loadSalesChart() {
+        salesChart.getData().clear(); // Clear previous data
+
+        try (Connection connection = DBConnection.getInstance().getConnection()) {
+
+            String sql = """
+                    SELECT c.name AS category,\s
+                                   SUM(od.orderQty * p.unit_price) AS total_sales
+                                   FROM orderdetail od
+                                   JOIN product p ON od.product_id = p.product_id
+                                   JOIN category c ON p.category_id = c.category_id
+                                   GROUP BY c.name
+                                   ORDER BY\s
+                                       CASE c.name
+                                           WHEN 'Ladies' THEN 1
+                                           WHEN 'Gents' THEN 2
+                                           WHEN 'Kids' THEN 3
+                                       END
+                """;
+
+            PreparedStatement pst = connection.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery();
+
+            // NEW: preparing a series for the bar chart
+            javafx.scene.chart.XYChart.Series<String, Number> series = new javafx.scene.chart.XYChart.Series<>();
+            series.setName("Sales by Category");
+
+            while (rs.next()) {
+                String category = rs.getString("category");
+                double sales = rs.getDouble("total_sales");
+
+                series.getData().add(new javafx.scene.chart.XYChart.Data<>(category, sales));
+            }
+
+            salesChart.getData().add(series);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

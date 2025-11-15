@@ -115,9 +115,9 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <BarChart layoutX="677.0" layoutY="362.0">
+      <BarChart fx:id="salesChart" layoutX="677.0" layoutY="362.0">
         <xAxis>
-          <CategoryAxis label="Ladies                         Gents                         Kids      " side="BOTTOM" />
+          <CategoryAxis side="BOTTOM" />
         </xAxis>
         <yAxis>
           <NumberAxis prefHeight="328.0" prefWidth="28.0" side="LEFT" />

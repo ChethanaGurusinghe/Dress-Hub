@@ -11,4 +11,5 @@ public interface CategoryRepository {
         boolean delete(String id) throws SQLException;
         Category search(String id) throws SQLException;
         List<Category> getAll() throws SQLException;
+
 }
