@@ -5,6 +5,7 @@ import repository.ProductRepository;
 import repository.impl.ProductRepositoryImpl;
 import service.ProductService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -34,5 +35,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product searchProduct(String productId) throws Exception {
         return repo.searchProduct(productId);
+    }
+
+    @Override
+    public boolean reduceProductStock(String productId, int qty) throws SQLException {
+        return repo.reduceStock(productId, qty);
     }
 }

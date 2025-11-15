@@ -18,4 +18,6 @@ public interface OrderService {
     void saveOrderDetail(String orderId, String productId, int orderQty) throws SQLException;
 
     boolean saveOrder(String orderId, double netTotal) throws SQLException;
+
+    void reduceProductStock(String productId, int orderQty) throws SQLException;
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,7 +22,6 @@ import util.InvoiceGenerator;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
 public class OrderPlacementFormController {
 
@@ -56,31 +54,30 @@ public class OrderPlacementFormController {
 
         btnAddToCart.setDisable(true);
 
+        // ENTER to fetch product
         txtProductId.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 fetchProduct();
             }
         });
 
-        // Auto-generate OrderID
+        // Auto-generate order ID
         try {
-            String orderId = orderService.generateOrderId();
-            txtOrderId.setText(orderId);
+            txtOrderId.setText(orderService.generateOrderId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Bind TableView to cartList
+        // Bind table columns
         tblCart.setItems(cartList);
-
         colItemCode.setCellValueFactory(new PropertyValueFactory<>("productId"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("orderQty"));
         colName.setCellValueFactory(new PropertyValueFactory<>("productName"));
-        colUnitPrice.setCellValueFactory(cellData ->
-                new SimpleDoubleProperty(cellData.getValue().getUnitPrice()).asObject()
+        colUnitPrice.setCellValueFactory(cell ->
+                new SimpleDoubleProperty(cell.getValue().getUnitPrice()).asObject()
         );
-        colTotal.setCellValueFactory(cellData ->
-                new SimpleDoubleProperty(cellData.getValue().getTotal()).asObject()
+        colTotal.setCellValueFactory(cell ->
+                new SimpleDoubleProperty(cell.getValue().getTotal()).asObject()
         );
     }
 
@@ -90,6 +87,7 @@ public class OrderPlacementFormController {
 
         try {
             Product product = orderService.getProductById(productId);
+
             if (product != null) {
                 lblProductName.setText(product.getDescription());
                 lblUnitPrice.setText(String.format("%.2f", product.getUnitPrice()));
@@ -100,6 +98,7 @@ public class OrderPlacementFormController {
                 btnAddToCart.setDisable(true);
                 txtProductId.requestFocus();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,6 +116,7 @@ public class OrderPlacementFormController {
         }
 
         int quantity;
+
         try {
             quantity = Integer.parseInt(qtyText);
             if (quantity <= 0) {
@@ -130,11 +130,13 @@ public class OrderPlacementFormController {
 
         try {
             Product product = orderService.getProductById(productId);
+
             if (product == null) {
                 showAlert(Alert.AlertType.ERROR, "Product not found!");
                 return;
             }
 
+            // Add to cart
             cartList.add(new OrderDetail(
                     orderId,
                     productId,
@@ -145,7 +147,6 @@ public class OrderPlacementFormController {
 
             updateNetTotal();
 
-            // Clear input fields
             txtProductId.clear();
             txtQuantity.clear();
             lblProductName.setText("");
@@ -176,23 +177,21 @@ public class OrderPlacementFormController {
 
     private void showAlert(Alert.AlertType type, String msg) {
         Alert alert = new Alert(type);
-        alert.setHeaderText(null);
         alert.setContentText(msg);
+        alert.setHeaderText(null);
         alert.showAndWait();
     }
 
+    // Logout
     @FXML
     public void btnLogOutOnAction(ActionEvent event) {
         handleLogout(event);
     }
 
-    @FXML
-    public void btnInvoicePrintOnAction(ActionEvent event) {
-        handlePrintInvoice(event);
-    }
 
     private void handleLogout(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to logout?", ButtonType.YES, ButtonType.NO);
+
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.YES) {
                 try {
@@ -209,42 +208,57 @@ public class OrderPlacementFormController {
         });
     }
 
+    // Print Invoice
+    @FXML
+    public void btnInvoicePrintOnAction(ActionEvent event) {
+        handlePrintInvoice(event);
+    }
+
+
     private void handlePrintInvoice(ActionEvent event) {
+
         try {
             String orderId = txtOrderId.getText().trim();
-
-            // Compute total amount
             double totalAmount = cartList.stream().mapToDouble(OrderDetail::getTotal).sum();
 
-            // Save order if not exists
+            // Save order once
             if (!orderService.isOrderExists(orderId)) {
-                boolean orderSaved = orderService.saveOrder(orderId, totalAmount);
-                if (!orderSaved) {
-                    showAlert(Alert.AlertType.ERROR, "Failed to save order in DB!");
+
+                boolean savedOrder = orderService.saveOrder(orderId, totalAmount);
+
+                if (!savedOrder) {
+                    showAlert(Alert.AlertType.ERROR, "Failed to save order!");
                     return;
                 }
 
+                // Save each order detail
                 for (OrderDetail od : cartList) {
                     orderService.saveOrderDetail(orderId, od.getProductId(), od.getOrderQty());
                 }
             }
 
-            // Create bill
+            for (OrderDetail od : cartList) {
+                orderService.reduceProductStock(od.getProductId(), od.getOrderQty());
+            }
+
+            // Create bill → save in DB
             BillController billController = new BillController();
             boolean billSaved = billController.createBill(orderId);
 
-            if (billSaved) {
-                String invoiceNo = billController.generateInvoiceNo();
-                InvoiceGenerator.generateInvoice(invoiceNo, orderId, cartList, totalAmount);
-                new Alert(Alert.AlertType.INFORMATION, "✅ Invoice printed successfully!").show();
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Failed to create bill in DB!");
+            if (!billSaved) {
+                showAlert(Alert.AlertType.ERROR, "Failed to create bill!");
+                return;
             }
+
+            // Generate invoice PDF
+            String invoiceNo = billController.generateInvoiceNo();
+            InvoiceGenerator.generateInvoice(invoiceNo, orderId, cartList, totalAmount);
+
+            new Alert(Alert.AlertType.INFORMATION, "Invoice printed successfully!").show();
 
         } catch (Exception e) {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error generating invoice!");
         }
     }
-
 }

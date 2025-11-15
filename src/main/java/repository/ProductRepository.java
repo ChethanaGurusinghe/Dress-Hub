@@ -11,4 +11,6 @@ public interface ProductRepository {
     List<Product> getAllProducts() throws SQLException;
     Product searchProduct(String productId) throws SQLException;
     Product getProductById(String productId) throws SQLException;
+    boolean reduceStock(String productId, int qty) throws SQLException;
+    boolean updateStock(String productId, int newQty) throws SQLException;
 }

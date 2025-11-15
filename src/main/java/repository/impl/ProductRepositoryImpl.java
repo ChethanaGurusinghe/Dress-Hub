@@ -107,6 +107,28 @@ public class ProductRepositoryImpl implements ProductRepository {
             }
             return null;
         }
+
+    @Override
+    public boolean reduceStock(String productId, int qty) throws SQLException {
+        String sql = "UPDATE product SET quantity = quantity - ? WHERE product_id = ?";
+        Connection connection = DBConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setInt(1, qty);
+        pstm.setString(2, productId);
+        return pstm.executeUpdate() > 0;
     }
+
+    @Override
+    public boolean updateStock(String productId, int newQty) throws SQLException {
+        String sql = "UPDATE product SET quantity = ? WHERE product_id = ?";
+        Connection connection = DBConnection.getInstance().getConnection();
+        PreparedStatement pstm = connection.prepareStatement(sql);
+        pstm.setInt(1, newQty);
+        pstm.setString(2, productId);
+        return pstm.executeUpdate() > 0;
+    }
+
+
+}
 
 
