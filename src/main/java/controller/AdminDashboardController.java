@@ -199,7 +199,7 @@ public class AdminDashboardController implements Initializable {
     }
 
     private void loadSalesChart() {
-        salesChart.getData().clear(); // Clear previous data
+        salesChart.getData().clear(); // Clear data
 
         try (Connection connection = DBConnection.getInstance().getConnection()) {
 
@@ -221,7 +221,7 @@ public class AdminDashboardController implements Initializable {
             PreparedStatement pst = connection.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
 
-            // NEW: preparing a series for the bar chart
+            // preparing a series for the bar chart
             javafx.scene.chart.XYChart.Series<String, Number> series = new javafx.scene.chart.XYChart.Series<>();
             series.setName("Sales by Category");
 

@@ -14,61 +14,61 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1440.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminDashboardController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a1128" height="800.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-color: #0A1128;" width="350.0" />
-      <ImageView fitHeight="104.0" fitWidth="98.0" layoutX="10.0" layoutY="10.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a1128" height="854.0" stroke="BLACK" strokeType="INSIDE" style="-fx-background-color: #0A1128;" width="350.0" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1142.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fitHeight="104.0" fitWidth="98.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
          <image>
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnAdminDashboard" layoutX="40.0" layoutY="127.0" mnemonicParsing="false" onAction="#btnAdminDashboardOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #E64A19;" text="Dashboard" textFill="WHITE">
+      <Button fx:id="btnAdminDashboard" mnemonicParsing="false" onAction="#btnAdminDashboardOnAction" prefHeight="35.0" prefWidth="235.0" style="-fx-background-color: #E64A19;" text="Dashboard" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="127.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnProductManagement" layoutX="40.0" layoutY="178.0" mnemonicParsing="false" onAction="#btnProdutManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Product Management" textFill="WHITE">
+      <Button fx:id="btnProductManagement" mnemonicParsing="false" onAction="#btnProdutManagementOnAction" prefHeight="35.0" prefWidth="235.0" style="-fx-background-color: #0A1128;" text="Product Management" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnLogOut" layoutX="49.0" layoutY="680.0" mnemonicParsing="false" onAction="#btnLogOutOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #E64A19;" text="LogOut" textFill="WHITE">
+      <Button fx:id="btnLogOut" mnemonicParsing="false" onAction="#btnLogOutOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #E64A19;" text="LogOut" textFill="WHITE" AnchorPane.leftAnchor="49.0" AnchorPane.topAnchor="680.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnUserManagement" layoutX="40.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnUserManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="User Management" textFill="WHITE">
+      <Button fx:id="btnUserManagement" mnemonicParsing="false" onAction="#btnUserManagementOnAction" prefHeight="35.0" prefWidth="233.0" style="-fx-background-color: #0A1128;" text="User Management" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="230.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnSupplierManagement" layoutX="40.0" layoutY="268.0" mnemonicParsing="false" onAction="#btnSupplierManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Supplier Management" textFill="WHITE">
+      <Button fx:id="btnSupplierManagement" mnemonicParsing="false" onAction="#btnSupplierManagementOnAction" prefHeight="35.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Supplier Management" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="284.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="btnCategoryManagement" layoutX="40.0" layoutY="313.0" mnemonicParsing="false" onAction="#btnCategoryManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Category Management" textFill="WHITE">
+      <Button fx:id="btnCategoryManagement" mnemonicParsing="false" onAction="#btnCategoryManagementOnAction" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #0A1128;" text="Category Management" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="345.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a1128" height="104.0" layoutX="345.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #0A1128;" width="1196.0" />
-      <Text fill="WHITE" layoutX="697.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Admin Dashboard">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#0a1128" height="104.0" layoutX="295.2" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" style="-fx-background-color: #0A1128;" width="1243.0" AnchorPane.bottomAnchor="827.0" AnchorPane.leftAnchor="295.0" AnchorPane.rightAnchor="-46.0" AnchorPane.topAnchor="0.0" />
+      <Text fill="WHITE" layoutX="697.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To Admin Dashboard" AnchorPane.bottomAnchor="865.208203125" AnchorPane.leftAnchor="697.0" AnchorPane.rightAnchor="459.00039062500014" AnchorPane.topAnchor="35.1806640625">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Text>
-      <Label layoutX="108.0" layoutY="47.0" prefHeight="40.0" prefWidth="142.0" style="-fx-text-fill: white;" text="DressHub">
+      <Label prefHeight="35.0" prefWidth="143.0" style="-fx-text-fill: white;" text="DressHub" AnchorPane.leftAnchor="108.0" AnchorPane.topAnchor="47.0">
          <font>
             <Font name="Castellar" size="25.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" layoutX="411.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="230.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" layoutX="697.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="230.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" layoutX="983.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="230.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" layoutX="1261.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="230.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e64a19" height="35.0" layoutX="413.0" layoutY="140.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="226.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e64a19" height="35.0" layoutX="699.0" layoutY="140.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="226.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e64a19" height="35.0" layoutX="985.0" layoutY="140.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="226.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e64a19" height="35.0" layoutX="1263.0" layoutY="140.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="226.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" layoutX="411.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="230.0" AnchorPane.bottomAnchor="672.9917968750001" AnchorPane.leftAnchor="411.0" AnchorPane.rightAnchor="851.399609375" AnchorPane.topAnchor="138.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" layoutX="697.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="230.0" AnchorPane.bottomAnchor="672.9917968750001" AnchorPane.leftAnchor="697.0" AnchorPane.rightAnchor="565.799609375" AnchorPane.topAnchor="138.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" layoutX="983.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="230.0" AnchorPane.bottomAnchor="672.9917968750001" AnchorPane.leftAnchor="983.0" AnchorPane.rightAnchor="279.39960937499995" AnchorPane.topAnchor="138.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" layoutX="1261.0" layoutY="138.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="230.0" AnchorPane.bottomAnchor="672.9917968750001" AnchorPane.leftAnchor="1261.0" AnchorPane.rightAnchor="1.7996093750000455" AnchorPane.topAnchor="138.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e64a19" height="35.0" layoutX="413.0" layoutY="140.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="226.0" AnchorPane.bottomAnchor="756.3917968750001" AnchorPane.leftAnchor="413.0" AnchorPane.rightAnchor="853.599609375" AnchorPane.topAnchor="140.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e64a19" height="35.0" layoutX="698.2" layoutY="140.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="226.0" AnchorPane.bottomAnchor="672.9917968750001" AnchorPane.leftAnchor="698.2" AnchorPane.rightAnchor="565.799609375" AnchorPane.topAnchor="140.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e64a19" height="35.0" layoutX="985.8" layoutY="140.8" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="226.0" AnchorPane.bottomAnchor="755.591796875" AnchorPane.leftAnchor="985.8" AnchorPane.rightAnchor="280.999609375" AnchorPane.topAnchor="140.8" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e64a19" height="35.0" layoutX="1263.2" layoutY="141.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="226.0" AnchorPane.bottomAnchor="755.3917968750001" AnchorPane.leftAnchor="1263.2" AnchorPane.rightAnchor="3.3996093749999545" AnchorPane.topAnchor="141.0" />
       <Text fill="WHITE" layoutX="488.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Sales">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -89,33 +89,33 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Text>
-      <Label fx:id="lblTotalSales" layoutX="492.0" layoutY="202.0" text="Total Sales">
+      <Label fx:id="lblTotalSales" layoutX="492.0" layoutY="202.0" prefHeight="18.0" prefWidth="82.0" text="Total Sales" AnchorPane.leftAnchor="492.0" AnchorPane.topAnchor="202.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblTotalOrders" layoutX="800.0" layoutY="202.0" text="Total Orders">
+      <Label fx:id="lblTotalOrders" layoutX="800.0" layoutY="202.0" text="Total Orders" AnchorPane.leftAnchor="800.0" AnchorPane.topAnchor="202.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblTotalProducts" layoutX="1081.0" layoutY="202.0" text="Total Products">
+      <Label fx:id="lblTotalProducts" layoutX="1081.0" layoutY="202.0" text="Total Products" AnchorPane.leftAnchor="1081.0" AnchorPane.topAnchor="202.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label fx:id="lblLowStock" layoutX="1376.0" layoutY="202.0" text="Low Stock">
+      <Label fx:id="lblLowStock" layoutX="1376.0" layoutY="202.0" text="Low Stock" AnchorPane.leftAnchor="1376.0" AnchorPane.rightAnchor="58.999609375" AnchorPane.topAnchor="202.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="487.0" layoutX="564.0" layoutY="294.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="781.0" />
-      <Label layoutX="871.0" layoutY="326.0" text="Sales By Category">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="487.0" layoutX="564.0" layoutY="294.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" width="781.0" AnchorPane.bottomAnchor="149.39999999999998" AnchorPane.leftAnchor="564.0" AnchorPane.rightAnchor="147.4000000000001" AnchorPane.topAnchor="294.0" />
+      <Label layoutX="871.0" layoutY="326.0" text="Sales By Category" AnchorPane.leftAnchor="871.0" AnchorPane.topAnchor="326.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <BarChart fx:id="salesChart" layoutX="677.0" layoutY="362.0">
+      <BarChart fx:id="salesChart" layoutX="677.0" layoutY="362.0" AnchorPane.leftAnchor="677.0" AnchorPane.topAnchor="362.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

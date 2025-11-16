@@ -9,67 +9,66 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="785.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddSupplierFormController">
    <children>
-      <ImageView fitHeight="109.0" fitWidth="128.0" layoutX="622.0" layoutY="18.0">
+      <ImageView fitHeight="109.0" fitWidth="128.0" layoutX="622.0" layoutY="18.0" AnchorPane.bottomAnchor="655.0" AnchorPane.leftAnchor="620.0" AnchorPane.rightAnchor="690.0" AnchorPane.topAnchor="20.0">
          <image>
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="727.0" layoutY="53.0" prefHeight="42.0" prefWidth="181.0" style="-fx-text-fill: black;" text="DressHub">
+      <Label layoutX="717.0" layoutY="36.0" prefHeight="75.0" prefWidth="182.0" style="-fx-text-fill: black;" text="DressHub" AnchorPane.bottomAnchor="732.8" AnchorPane.leftAnchor="717.0" AnchorPane.rightAnchor="540.5999999999999" AnchorPane.topAnchor="36.0">
          <font>
             <Font name="Castellar" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="704.0" layoutY="114.0" text="Add New Supplier" underline="true">
+      <Label layoutX="708.0" layoutY="107.0" prefHeight="44.0" prefWidth="160.0" text="Add New Supplier" underline="true" AnchorPane.bottomAnchor="693.0" AnchorPane.leftAnchor="708.0" AnchorPane.rightAnchor="572.0" AnchorPane.topAnchor="107.0">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="514.0" layoutX="245.0" layoutY="167.0" stroke="#e64a19" strokeType="INSIDE" strokeWidth="2.0" width="1080.0" />
-      <Label layoutX="350.0" layoutY="228.0" text="Supplier ID">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="514.0" layoutX="245.0" layoutY="167.0" stroke="#e64a19" strokeType="INSIDE" strokeWidth="2.0" width="1080.0" AnchorPane.bottomAnchor="105.0" AnchorPane.leftAnchor="245.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="165.0" />
+      <Label layoutX="363.0" layoutY="218.0" prefHeight="45.0" prefWidth="74.0" text="Supplier ID" AnchorPane.bottomAnchor="580.4" AnchorPane.leftAnchor="363.0" AnchorPane.rightAnchor="1002.5999999999999" AnchorPane.topAnchor="218.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierId" layoutX="478.0" layoutY="226.0" />
-      <Label layoutX="781.0" layoutY="228.0" text="Company Name">
+      <TextField fx:id="txtSupplierId" layoutX="479.0" layoutY="225.0" prefHeight="31.0" prefWidth="150.0" AnchorPane.bottomAnchor="588.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="810.0" AnchorPane.topAnchor="225.0" />
+      <Label layoutX="780.0" layoutY="218.0" prefHeight="44.0" prefWidth="108.0" text="Company Name" AnchorPane.bottomAnchor="581.2" AnchorPane.leftAnchor="780.0" AnchorPane.rightAnchor="552.0" AnchorPane.topAnchor="218.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtCompanyName" layoutX="925.0" layoutY="225.0" prefHeight="26.0" prefWidth="250.0" />
-      <Label layoutX="350.0" layoutY="294.0" text="Supplier Name">
+      <TextField fx:id="txtCompanyName" layoutX="925.0" layoutY="225.0" prefHeight="31.0" prefWidth="250.0" AnchorPane.bottomAnchor="588.0" AnchorPane.leftAnchor="925.0" AnchorPane.rightAnchor="265.0" AnchorPane.topAnchor="225.0" />
+      <Label layoutX="363.0" layoutY="283.0" prefHeight="44.0" prefWidth="99.0" text="Supplier Name" AnchorPane.bottomAnchor="516.1999999999999" AnchorPane.leftAnchor="363.0" AnchorPane.rightAnchor="978.6" AnchorPane.topAnchor="283.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtSupplierName" layoutX="479.0" layoutY="292.0" prefHeight="26.0" prefWidth="232.0" />
-      <Label layoutX="781.0" layoutY="294.0" text="Phone No">
+      <TextField fx:id="txtSupplierName" layoutX="479.0" layoutY="291.2" prefHeight="31.0" prefWidth="213.0" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="747.0" AnchorPane.topAnchor="291.0" />
+      <Label layoutX="785.0" layoutY="283.0" prefHeight="43.0" prefWidth="74.0" text="Phone No" AnchorPane.bottomAnchor="517.0" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="581.4" AnchorPane.topAnchor="283.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPhoneNo" layoutX="925.0" layoutY="292.0" prefHeight="26.0" prefWidth="182.0" />
-      <Label layoutX="350.0" layoutY="353.0" text="Email">
+      <TextField fx:id="txtPhoneNo" layoutX="925.0" layoutY="292.0" prefHeight="31.0" prefWidth="160.0" AnchorPane.bottomAnchor="522.0" AnchorPane.leftAnchor="925.0" AnchorPane.rightAnchor="355.0" AnchorPane.topAnchor="290.0" />
+      <Label layoutX="363.0" layoutY="354.0" prefHeight="44.0" prefWidth="45.0" text="Email" AnchorPane.bottomAnchor="445.2" AnchorPane.leftAnchor="363.0" AnchorPane.rightAnchor="1032.2" AnchorPane.topAnchor="354.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtEmail" layoutX="479.0" layoutY="350.0" prefHeight="26.0" prefWidth="232.0" />
-      <Label layoutX="784.0" layoutY="352.0" text="Notes">
+      <TextField fx:id="txtEmail" layoutX="480.0" layoutY="361.0" prefHeight="31.0" prefWidth="213.0" AnchorPane.bottomAnchor="452.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="747.0" AnchorPane.topAnchor="361.0" />
+      <Label layoutX="785.0" layoutY="366.0" text="Notes" AnchorPane.bottomAnchor="456.4" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="581.4" AnchorPane.topAnchor="366.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNotes" layoutX="925.0" layoutY="349.0" prefHeight="109.0" prefWidth="182.0" />
-      <Button fx:id="btnAddSupplier" layoutX="672.0" layoutY="544.0" mnemonicParsing="false" onAction="#btnAddSupplierOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="ADD" textFill="WHITE">
+      <TextField fx:id="txtNotes" layoutX="925.0" layoutY="349.0" prefHeight="83.0" prefWidth="182.0" AnchorPane.bottomAnchor="412.20000000000005" AnchorPane.leftAnchor="925.0" AnchorPane.rightAnchor="332.80000000000007" AnchorPane.topAnchor="350.0" />
+      <Button fx:id="btnAddSupplier" layoutX="672.0" layoutY="544.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#btnAddSupplierOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="ADD" textFill="WHITE" AnchorPane.bottomAnchor="269.00000000000006" AnchorPane.leftAnchor="672.0" AnchorPane.rightAnchor="678.4" AnchorPane.topAnchor="544.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="btnCancelSupplier" layoutX="843.0" layoutY="544.0" mnemonicParsing="false" onAction="#btnCancelSupplierOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="Cancel" textFill="WHITE">
+      <Button fx:id="btnCancelSupplier" layoutX="868.0" layoutY="544.0" mnemonicParsing="false" onAction="#btnCancelSupplierOnAction" prefHeight="31.0" prefWidth="89.0" style="-fx-background-color: #E64A19;" text="Cancel" textFill="WHITE" AnchorPane.bottomAnchor="268.79999999999995" AnchorPane.leftAnchor="868.0" AnchorPane.rightAnchor="479.19999999999993" AnchorPane.topAnchor="544.0">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
