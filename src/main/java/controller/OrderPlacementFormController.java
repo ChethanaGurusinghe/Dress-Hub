@@ -6,12 +6,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.dto.Bill;
 import model.dto.OrderDetail;
@@ -21,12 +25,27 @@ import service.impl.OrderServiceImpl;
 import util.InvoiceGenerator;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class OrderPlacementFormController {
+public class OrderPlacementFormController implements Initializable {
 
     @FXML
     public Button btnInvoicePrint, btnCancel, btnAddToCart, btnLogOut;
+    public AnchorPane rootPane;
+    public Rectangle rectangle1;
+    public Text lblHeader;
+    public Label lblDetail;
+    public Rectangle rectangle2;
+    public Label lblId;
+    public Label lblName;
+    public Label lblPrice;
+    public Label lblQty;
+    public Label lblOrderId;
+    public Label lblNetTot;
+    public TextField txtProductName;
+    public TextField txtUnitPrice;
 
     @FXML
     private TextField txtProductId, txtQuantity, txtOrderId;
@@ -48,38 +67,6 @@ public class OrderPlacementFormController {
 
     private final ObservableList<OrderDetail> cartList = FXCollections.observableArrayList();
     private final OrderService orderService = new OrderServiceImpl();
-
-    @FXML
-    public void initialize() {
-
-        btnAddToCart.setDisable(true);
-
-        // ENTER to fetch product
-        txtProductId.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                fetchProduct();
-            }
-        });
-
-        // Auto-generate order ID
-        try {
-            txtOrderId.setText(orderService.generateOrderId());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Bind table columns
-        tblCart.setItems(cartList);
-        colItemCode.setCellValueFactory(new PropertyValueFactory<>("productId"));
-        colQuantity.setCellValueFactory(new PropertyValueFactory<>("orderQty"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("productName"));
-        colUnitPrice.setCellValueFactory(cell ->
-                new SimpleDoubleProperty(cell.getValue().getUnitPrice()).asObject()
-        );
-        colTotal.setCellValueFactory(cell ->
-                new SimpleDoubleProperty(cell.getValue().getTotal()).asObject()
-        );
-    }
 
     private void fetchProduct() {
         String productId = txtProductId.getText().trim();
@@ -260,5 +247,95 @@ public class OrderPlacementFormController {
             e.printStackTrace();
             showAlert(Alert.AlertType.ERROR, "Error generating invoice!");
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        centerContent();
+
+        // Update positions whenever window is resized
+        rootPane.widthProperty().addListener((obs, oldVal, newVal) -> centerContent());
+        rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerContent());
+
+        btnAddToCart.setDisable(true);
+
+        // ENTER to fetch product
+        txtProductId.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                fetchProduct();
+            }
+        });
+
+        // Auto-generate order ID
+        try {
+            txtOrderId.setText(orderService.generateOrderId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Bind table columns
+        tblCart.setItems(cartList);
+        colItemCode.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        colQuantity.setCellValueFactory(new PropertyValueFactory<>("orderQty"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("productName"));
+        colUnitPrice.setCellValueFactory(cell ->
+                new SimpleDoubleProperty(cell.getValue().getUnitPrice()).asObject()
+        );
+        colTotal.setCellValueFactory(cell ->
+                new SimpleDoubleProperty(cell.getValue().getTotal()).asObject()
+        );
+
+    }
+
+    private void centerContent() {
+
+        double width = rootPane.getWidth();
+        double height = rootPane.getHeight();
+
+        if (width == 0 || height == 0) return;
+
+        double centerX = width / 2;
+
+        rectangle1.setWidth(width);
+
+        // Center header text
+        lblHeader.setLayoutX(centerX - (lblHeader.getBoundsInParent().getWidth() / 2));
+
+        // Logout button stays right aligned
+        btnLogOut.setLayoutX(width - 160);
+
+        lblDetail.setLayoutX(centerX - (lblDetail.getBoundsInParent().getWidth() / 2));
+
+        double rect2Width = rectangle2.getWidth();
+        rectangle2.setLayoutX(centerX - (rect2Width / 2));
+        double formX = rectangle2.getLayoutX();
+
+        lblId.setLayoutX(formX + 57);
+        txtProductId.setLayoutX(formX + 188);
+
+        lblName.setLayoutX(formX + 55);
+        txtProductName.setLayoutX(formX + 188);
+        lblProductName.setLayoutX(formX + 195);
+
+        lblPrice.setLayoutX(formX + 55);
+        txtUnitPrice.setLayoutX(formX + 188);
+        lblUnitPrice.setLayoutX(formX + 195);
+
+        lblQty.setLayoutX(formX + 57);
+        txtQuantity.setLayoutX(formX + 188);
+
+        btnAddToCart.setLayoutX(formX + rect2Width - 130);
+
+        lblOrderId.setLayoutX(formX);
+        txtOrderId.setLayoutX(formX + 74);
+
+        tblCart.setLayoutX(centerX - (tblCart.getPrefWidth() / 2));
+
+        lblNetTot.setLayoutX(centerX + 250);
+        lblNetTotal.setLayoutX(centerX + 350);
+
+        btnInvoicePrint.setLayoutX(centerX + 130);
+        btnCancel.setLayoutX(centerX + 280);
     }
 }
