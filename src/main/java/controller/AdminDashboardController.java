@@ -1,6 +1,7 @@
 package controller;
 
 import db.DBConnection;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,6 +26,27 @@ import java.util.ResourceBundle;
 public class AdminDashboardController implements Initializable {
 
     public Button btnUserManagement;
+    public ImageView logoImage;
+    public Text lblHeader;
+    public Label lblTitle;
+    public Rectangle rec1;
+    public Rectangle rec2;
+    public Rectangle rec3;
+    public Rectangle rec1S1;
+    public Rectangle rec2Ss;
+    public Rectangle rec3S3;
+    public Rectangle rec4S4;
+    public Text lblTot;
+    public Rectangle rec4;
+    public Text lblOrder;
+    public Text lblPro;
+    public Text lblLow;
+    public Rectangle recChart;
+    public Label lblSales;
+
+    @FXML
+    public AnchorPane rootPane;
+
     @FXML
     private Button btnAdminDashboard;
 
@@ -136,6 +162,56 @@ public class AdminDashboardController implements Initializable {
 
         loadDashboardData();
         loadSalesChart();
+
+        Platform.runLater(() -> {
+            centerContent();
+
+            rootPane.widthProperty().addListener((obs, oldVal, newVal) -> centerContent());
+            rootPane.heightProperty().addListener((obs, oldVal, newVal) -> centerContent());
+        });
+    }
+
+    private void centerContent() {
+        double paneWidth = rootPane.getWidth();
+        if (paneWidth == 0) return;
+
+        double sidebarWidth = 350;
+        double topHeaderHeight = 100;
+        double availableWidth = paneWidth - sidebarWidth;
+        int rectCount = 4;
+        double spacing = 20;
+
+        // Fix for restore down: clamp rectWidth so it never exceeds available space
+        double maxRectWidth = 286; // keep your current design assumption
+        double rectWidth = Math.min(maxRectWidth, (availableWidth - spacing * (rectCount - 1)) / rectCount);
+
+        // Set rectangle X positions dynamically
+        rec1.setLayoutX(sidebarWidth + 0 * (rectWidth + spacing));
+        rec2.setLayoutX(sidebarWidth + 1 * (rectWidth + spacing));
+        rec3.setLayoutX(sidebarWidth + 2 * (rectWidth + spacing));
+        rec4.setLayoutX(sidebarWidth + 3 * (rectWidth + spacing));
+
+        // Set inner elements relative to rectangles
+        rec1S1.setLayoutX(rec1.getLayoutX() + 2);
+        rec2Ss.setLayoutX(rec2.getLayoutX() + 2);
+        rec3S3.setLayoutX(rec3.getLayoutX() + 2);
+        rec4S4.setLayoutX(rec4.getLayoutX() + 2);
+
+        lblTot.setLayoutX(rec1S1.getLayoutX() + 140);
+        lblOrder.setLayoutX(rec2Ss.getLayoutX() + 115);
+        lblPro.setLayoutX(rec3S3.getLayoutX() + 90);
+        lblLow.setLayoutX(rec4S4.getLayoutX() + 90);
+
+        lblTotalSales.setLayoutX(rec1.getLayoutX() + 80);
+        lblTotalOrders.setLayoutX(rec2.getLayoutX() + 80);
+        lblTotalProducts.setLayoutX(rec3.getLayoutX() + 80);
+        lblLowStock.setLayoutX(rec4.getLayoutX() + 80);
+
+        // Center chart
+        double chartWidth = 0.8 * availableWidth;
+        recChart.setLayoutX(sidebarWidth + (availableWidth - chartWidth) / 2);
+        lblSales.setLayoutX(recChart.getLayoutX() + chartWidth / 2 - 70);
+        salesChart.setLayoutX(recChart.getLayoutX() + 113);
     }
 
     Stage productStage = new Stage();
