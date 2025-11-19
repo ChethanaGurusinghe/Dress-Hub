@@ -10,6 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.dto.Category;
 import service.CategoryService;
@@ -22,6 +26,12 @@ import java.util.Optional;
 public class CategoryManagementController {
 
     public Button btnUserManagement;
+    public AnchorPane rootPane;
+    public Rectangle rectangle1;
+    public ImageView logoImage;
+    public Label lblTittle;
+    public Rectangle rectangle2;
+    public Text lblHeader;
     // Sidebar buttons (fx:id must match your FXML)
     @FXML
     private Button btnAdminDashboard;

@@ -8,64 +8,64 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="785.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BillController">
+<AnchorPane fx:id="root" prefHeight="785.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BillController">
    <children>
-      <ImageView fitHeight="70.0" fitWidth="84.0" layoutX="264.0" AnchorPane.leftAnchor="264.0" AnchorPane.topAnchor="0.0">
+      <ImageView fx:id="logoImage" fitHeight="70.0" fitWidth="84.0" layoutX="264.0" AnchorPane.leftAnchor="264.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="232.0" layoutY="54.0" prefHeight="32.0" prefWidth="146.0" style="-fx-text-fill: black;" text="DressHub" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="54.0">
+      <Label fx:id="lblTittle" layoutX="232.0" layoutY="54.0" prefHeight="32.0" prefWidth="146.0" style="-fx-text-fill: black;" text="DressHub" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="54.0">
          <font>
             <Font name="Castellar" size="25.0" />
          </font>
       </Label>
-      <Label layoutX="224.0" layoutY="90.0" text="No.123 , Main Rd , Colombo" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="86.4">
+      <Label fx:id="lblAddress" layoutX="224.0" layoutY="90.0" text="No.123 , Main Rd , Colombo" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="86.4">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="255.0" layoutY="109.0" text="Tel : 077 1234567" AnchorPane.leftAnchor="253.0" AnchorPane.topAnchor="108.4">
+      <Label fx:id="lblPhone" layoutX="255.0" layoutY="109.0" text="Tel : 077 1234567" AnchorPane.leftAnchor="253.0" AnchorPane.topAnchor="108.4">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="163.0" layoutY="173.0" text="Bill Number">
+      <Label fx:id="lblBiil" layoutX="163.0" layoutY="173.0" text="Bill Number">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
       <Label fx:id="lblBillNo" layoutX="337.0" layoutY="173.0" text="Bill Number" />
-      <Label layoutX="163.0" layoutY="205.0" text="Date">
+      <Label fx:id="lblDay" layoutX="163.0" layoutY="205.0" text="Date">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="163.0" layoutY="239.0" text="Time">
+      <Label fx:id="lblti" layoutX="163.0" layoutY="239.0" text="Time">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
       <Label fx:id="lblDate" layoutX="337.0" layoutY="205.0" prefHeight="18.0" prefWidth="84.0" text="Date" />
       <Label fx:id="lblTime" layoutX="336.0" layoutY="238.0" prefHeight="18.0" prefWidth="84.0" text="Time" />
-      <Label layoutX="124.0" layoutY="268.0" prefHeight="18.0" prefWidth="321.0" text="------------------------------------------------------------------">
+      <Label fx:id="lblLine1" layoutX="124.0" layoutY="268.0" prefHeight="18.0" prefWidth="321.0" text="------------------------------------------------------------------">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <TableView layoutX="123.0" layoutY="298.0" prefHeight="240.0" prefWidth="322.0">
+      <TableView fx:id="tblBill" layoutX="123.0" layoutY="298.0" prefHeight="240.0" prefWidth="322.0">
         <columns>
-          <TableColumn prefWidth="115.99999237060547" text="Product" />
-          <TableColumn prefWidth="100.0" text="QTY" />
-            <TableColumn prefWidth="106.4000244140625" text="Price(Rs)" />
+          <TableColumn fx:id="colProduct" prefWidth="115.99999237060547" text="Product" />
+          <TableColumn fx:id="colQty" prefWidth="100.0" text="QTY" />
+            <TableColumn fx:id="colPrice" prefWidth="106.4000244140625" text="Price(Rs)" />
         </columns>
       </TableView>
-      <Label layoutX="123.0" layoutY="552.0" prefHeight="18.0" prefWidth="321.0" text="------------------------------------------------------------------">
+      <Label fx:id="lblLine2" layoutX="123.0" layoutY="552.0" prefHeight="18.0" prefWidth="321.0" text="------------------------------------------------------------------">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="298.0" layoutY="581.0" text="Total Amount">
+      <Label fx:id="lblTot" layoutX="298.0" layoutY="581.0" text="Total Amount">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -75,12 +75,12 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="124.0" layoutY="610.0" prefHeight="18.0" prefWidth="321.0" text="------------------------------------------------------------------">
+      <Label fx:id="lblLine3" layoutX="124.0" layoutY="610.0" prefHeight="18.0" prefWidth="321.0" text="------------------------------------------------------------------">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Label layoutX="228.0" layoutY="639.0" text="Thank You ! Come Again..." />
-      <Label layoutX="259.0" layoutY="663.0" text="DressHub" />
+      <Label fx:id="lblThankYou" layoutX="228.0" layoutY="639.0" text="Thank You ! Come Again..." />
+      <Label fx:id="lblShop" layoutX="259.0" layoutY="663.0" text="DressHub" />
    </children>
 </AnchorPane>
