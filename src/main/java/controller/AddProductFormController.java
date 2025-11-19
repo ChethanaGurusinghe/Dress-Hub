@@ -1,9 +1,13 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.dto.Product;
 import service.ProductService;
@@ -14,6 +18,16 @@ import java.util.ResourceBundle;
 
 public class AddProductFormController implements Initializable {
 
+    public ImageView logoImage;
+    public Label lblTittle;
+    public Label lblSubTitle;
+    public Label lblProductId;
+    public Label lblProductName;
+    public Label lblCategory;
+    public Label lblUnitPrice;
+    public Label lblQuantity;
+    public AnchorPane root;
+    public Rectangle rectangle;
     @FXML private TextField txtProductId;
     @FXML private TextField txtProductName;
     @FXML private ComboBox<String> comboCategory;
@@ -91,9 +105,74 @@ public class AddProductFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Platform.runLater(() -> {
+            centerContent();
+
+            // Listen to resizing
+            root.widthProperty().addListener((obs, oldV, newV) -> centerContent());
+            root.heightProperty().addListener((obs, oldV, newV) -> centerContent());
+        });
+
         // ensure the fx:id is correct in FXML; populate categories (you used them in UI)
         if (comboCategory != null) {
             comboCategory.getItems().addAll("Ladies", "Gents", "Kids");
         }
     }
+
+    private void centerContent() {
+
+        double paneWidth = root.getWidth();
+        double paneHeight = root.getHeight();
+
+        if (paneWidth == 0 || paneHeight == 0) return;
+
+        // ---------- Logo ----------
+        logoImage.setLayoutX((paneWidth - logoImage.getFitWidth()) / 2);
+        logoImage.setLayoutY(20);
+
+        // ---------- Title ----------
+        lblTittle.setLayoutX((paneWidth - lblTittle.getWidth()) / 2);
+        lblTittle.setLayoutY(logoImage.getLayoutY() + 80);
+
+        // ---------- Main Rectangle ----------
+        double rectWidth = paneWidth * 0.75;     // 75% of window width
+        double rectHeight = paneHeight * 0.65;   // 65% of window height
+
+        rectangle.setWidth(rectWidth);
+        rectangle.setHeight(rectHeight);
+        rectangle.setLayoutX((paneWidth - rectWidth) / 2);
+        rectangle.setLayoutY((paneHeight - rectHeight) / 2);
+
+        // ---------- Subtitle ----------
+        lblSubTitle.setLayoutX((paneWidth - lblSubTitle.getWidth()) / 2);
+        lblSubTitle.setLayoutY(rectangle.getLayoutY() - 30);
+
+        // Distance from left of rectangle
+        double leftX = rectangle.getLayoutX() + 110;
+        double rightX = rectangle.getLayoutX() + rectWidth - 350;
+
+        // ---------- Product ID ----------
+        lblProductId.setLayoutX(leftX);
+        txtProductId.setLayoutX(leftX + 110);
+
+        lblProductName.setLayoutX(rightX);
+        txtProductName.setLayoutX(rightX + 120);
+
+        // ---------- Category & Unit Price ----------
+        lblCategory.setLayoutX(leftX);
+        comboCategory.setLayoutX(leftX + 110);
+
+        lblUnitPrice.setLayoutX(rightX);
+        txtUnitPrice.setLayoutX(rightX + 120);
+
+        // ---------- Quantity ----------
+        lblQuantity.setLayoutX(rightX);
+        txtQuantity.setLayoutX(rightX + 120);
+
+        // ---------- Buttons ----------
+        btnAddProduct.setLayoutX(paneWidth / 2 - 120);
+        btnCancelProduct.setLayoutX(paneWidth / 2 + 20);
+    }
+
 }

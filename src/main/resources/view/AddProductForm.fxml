@@ -10,50 +10,50 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="785.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductFormController">
+<AnchorPane fx:id="root" prefHeight="785.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddProductFormController">
    <children>
-      <ImageView fitHeight="109.0" fitWidth="128.0" layoutX="602.0" layoutY="9.0" AnchorPane.bottomAnchor="660.0" AnchorPane.leftAnchor="610.0" AnchorPane.rightAnchor="740.0" AnchorPane.topAnchor="15.0">
+      <ImageView fx:id="logoImage" fitHeight="109.0" fitWidth="128.0" layoutX="602.0" layoutY="9.0" AnchorPane.bottomAnchor="660.0" AnchorPane.leftAnchor="610.0" AnchorPane.rightAnchor="740.0" AnchorPane.topAnchor="15.0">
          <image>
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="707.0" layoutY="51.2" prefHeight="42.0" prefWidth="178.0" style="-fx-text-fill: black;" text="DressHub" AnchorPane.bottomAnchor="695.0" AnchorPane.leftAnchor="715.0" AnchorPane.rightAnchor="547.0" AnchorPane.topAnchor="51.0">
+      <Label fx:id="lblTittle" layoutX="707.0" layoutY="51.2" prefHeight="42.0" prefWidth="178.0" style="-fx-text-fill: black;" text="DressHub" AnchorPane.bottomAnchor="695.0" AnchorPane.leftAnchor="715.0" AnchorPane.rightAnchor="547.0" AnchorPane.topAnchor="51.0">
          <font>
             <Font name="Castellar" size="30.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="514.0" layoutX="225.0" layoutY="147.0" stroke="#e64a19" strokeType="INSIDE" strokeWidth="2.0" width="1080.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="150.0" />
-      <Label layoutX="694.0" layoutY="105.0" text="Add New Product" underline="true" AnchorPane.bottomAnchor="645.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="625.0" AnchorPane.topAnchor="113.0">
+      <Rectangle fx:id="rectangle" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="514.0" layoutX="225.0" layoutY="147.0" stroke="#e64a19" strokeType="INSIDE" strokeWidth="2.0" width="1080.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="150.0" />
+      <Label fx:id="lblSubTitle" layoutX="694.0" layoutY="105.0" text="Add New Product" underline="true" AnchorPane.bottomAnchor="645.0" AnchorPane.leftAnchor="700.0" AnchorPane.rightAnchor="625.0" AnchorPane.topAnchor="113.0">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="330.0" layoutY="208.0" prefHeight="22.0" prefWidth="89.0" text="Product ID" AnchorPane.bottomAnchor="560.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="1060.0" AnchorPane.topAnchor="205.0">
+      <Label fx:id="lblProductId" layoutX="330.0" layoutY="208.0" prefHeight="22.0" prefWidth="89.0" text="Product ID" AnchorPane.bottomAnchor="560.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="1060.0" AnchorPane.topAnchor="205.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <TextField fx:id="txtProductId" layoutX="438.0" layoutY="206.0" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="435.0" AnchorPane.rightAnchor="895.0" AnchorPane.topAnchor="205.0" />
-      <Label layoutX="730.0" layoutY="208.0" prefHeight="22.0" prefWidth="104.0" text="Product Name" AnchorPane.bottomAnchor="560.0" AnchorPane.leftAnchor="730.0" AnchorPane.rightAnchor="646.0" AnchorPane.topAnchor="205.0">
+      <Label fx:id="lblProductName" layoutX="730.0" layoutY="208.0" prefHeight="22.0" prefWidth="104.0" text="Product Name" AnchorPane.bottomAnchor="560.0" AnchorPane.leftAnchor="730.0" AnchorPane.rightAnchor="646.0" AnchorPane.topAnchor="205.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <TextField fx:id="txtProductName" layoutX="868.0" layoutY="205.0" prefHeight="26.0" prefWidth="256.0" AnchorPane.bottomAnchor="555.0" AnchorPane.leftAnchor="870.0" AnchorPane.rightAnchor="355.0" AnchorPane.topAnchor="205.0" />
-      <Label layoutX="335.0" layoutY="276.0" text="Category" AnchorPane.bottomAnchor="490.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="1085.0" AnchorPane.topAnchor="275.0">
+      <Label fx:id="lblCategory" layoutX="335.0" layoutY="276.0" text="Category" AnchorPane.bottomAnchor="490.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="1085.0" AnchorPane.topAnchor="275.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
        <ComboBox fx:id="comboCategory" layoutX="438.0" layoutY="274.0" prefWidth="160.0" promptText="Select Category" AnchorPane.bottomAnchor="485.0" AnchorPane.leftAnchor="435.0" AnchorPane.rightAnchor="885.0" AnchorPane.topAnchor="275.0" />
 
-       <Label layoutX="734.0" layoutY="276.0" text="Unit Price(Rs)" AnchorPane.bottomAnchor="490.0" AnchorPane.leftAnchor="730.0" AnchorPane.rightAnchor="660.0" AnchorPane.topAnchor="275.0">
+       <Label fx:id="lblUnitPrice" layoutX="734.0" layoutY="276.0" text="Unit Price(Rs)" AnchorPane.bottomAnchor="490.0" AnchorPane.leftAnchor="730.0" AnchorPane.rightAnchor="660.0" AnchorPane.topAnchor="275.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <TextField fx:id="txtUnitPrice" layoutX="870.0" layoutY="273.0" prefHeight="26.0" prefWidth="162.0" AnchorPane.bottomAnchor="485.0" AnchorPane.leftAnchor="870.0" AnchorPane.rightAnchor="445.0" AnchorPane.topAnchor="275.0" />
-      <Label layoutX="736.0" layoutY="347.0" text="Quantity" AnchorPane.bottomAnchor="415.0" AnchorPane.leftAnchor="735.0" AnchorPane.rightAnchor="685.0" AnchorPane.topAnchor="350.0">
+      <Label fx:id="lblQuantity" layoutX="736.0" layoutY="347.0" text="Quantity" AnchorPane.bottomAnchor="415.0" AnchorPane.leftAnchor="735.0" AnchorPane.rightAnchor="685.0" AnchorPane.topAnchor="350.0">
          <font>
             <Font size="15.0" />
          </font>
