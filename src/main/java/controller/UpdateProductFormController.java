@@ -1,15 +1,33 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.dto.Product;
 import service.ProductService;
 import service.impl.ProductServiceImpl;
 
-public class UpdateProductFormController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class UpdateProductFormController implements Initializable {
+
+    public AnchorPane rootPane;
+    public ImageView logoImage;
+    public Label lblTitle;
+    public Label lblSubTitle;
+    public Rectangle rectangle1;
+    public Label lblProductId;
+    public Label lblProductName;
+    public Label lblCategory;
+    public Label lblPrice;
+    public Label lblQty;
     @FXML private TextField txtProductId;
     @FXML private TextField txtProductName;
     @FXML private ComboBox<String> comboCategory;
@@ -20,13 +38,6 @@ public class UpdateProductFormController {
 
     private final ProductService service = new ProductServiceImpl();
     private Product original;
-
-    @FXML
-    public void initialize() {
-        if (comboCategory != null) {
-            comboCategory.getItems().addAll("Ladies", "Gents", "Kids");
-        }
-    }
 
     public void setProductData(Product p) {
         this.original = p;
@@ -90,4 +101,51 @@ public class UpdateProductFormController {
         a.setContentText(msg);
         a.showAndWait();
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Platform.runLater(() -> {
+            adjustLayout(); // initial positioning
+
+            rootPane.widthProperty().addListener((obs, oldVal, newVal) -> adjustLayout());
+            rootPane.heightProperty().addListener((obs, oldVal, newVal) -> adjustLayout());
+        });
+
+        if (comboCategory != null) {
+            comboCategory.getItems().addAll("Ladies", "Gents", "Kids");
+        }
+    }
+
+    private void adjustLayout() {
+        double paneWidth = rootPane.getWidth();
+        double paneHeight = rootPane.getHeight();
+
+        if (paneWidth == 0 || paneHeight == 0) return;
+
+        double centerX = paneWidth / 2;
+
+        // Center rectangle
+        rectangle1.setLayoutX(centerX - rectangle1.getWidth() / 2);
+
+        lblProductId.setLayoutX(rectangle1.getLayoutX() + 100);
+        txtProductId.setLayoutX(lblProductId.getLayoutX() + 110);
+
+        lblProductName.setLayoutX(txtProductId.getLayoutX() + 280);
+        txtProductName.setLayoutX(lblProductName.getLayoutX() + 120);
+
+        lblCategory.setLayoutX(rectangle1.getLayoutX() + 110);
+        comboCategory.setLayoutX(lblCategory.getLayoutX() + 110);
+
+        lblPrice.setLayoutX(txtProductName.getLayoutX());
+        txtUnitPrice.setLayoutX(lblPrice.getLayoutX() + 120);
+
+        lblQty.setLayoutX(txtProductName.getLayoutX());
+        txtQuantity.setLayoutX(lblQty.getLayoutX() + 120);
+
+        // Buttons
+        btnUpdateProduct.setLayoutX(centerX - 100);
+        btnCancelProduct.setLayoutX(centerX + 20);
+    }
+
 }

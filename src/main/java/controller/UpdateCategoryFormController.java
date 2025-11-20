@@ -1,16 +1,33 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import model.dto.Category;
 import service.CategoryService;
 import service.impl.CategoryServiceImpl;
 
-public class UpdateCategoryFormController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class UpdateCategoryFormController implements Initializable {
+
+    public AnchorPane rootPane;
+    public ImageView logoImage;
+    public Label lblTittle;
+    public Label lblSubTitle;
+    public Rectangle rectangle1;
+    public Label lblCategory;
+    public Label lblName;
+    public Label lblDescription;
     CategoryService categoryService = new CategoryServiceImpl();
 
     @FXML
@@ -72,4 +89,42 @@ public class UpdateCategoryFormController {
         txtCategoryName.clear();
         txtDescription.clear();
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Platform.runLater(() -> {
+            adjustLayout(); // initial positioning
+
+            rootPane.widthProperty().addListener((obs, oldVal, newVal) -> adjustLayout());
+            rootPane.heightProperty().addListener((obs, oldVal, newVal) -> adjustLayout());
+        });
+    }
+
+    private void adjustLayout() {
+        double paneWidth = rootPane.getWidth();
+        double paneHeight = rootPane.getHeight();
+
+        if (paneWidth == 0 || paneHeight == 0) return;
+
+        double centerX = paneWidth / 2;
+
+        // Center rectangle
+        rectangle1.setLayoutX(centerX - rectangle1.getWidth() / 2);
+
+        // Align labels and text fields relative to rectangle
+        lblCategory.setLayoutX(rectangle1.getLayoutX() + 100);
+        txtCategoryId.setLayoutX(lblCategory.getLayoutX() + 120);
+
+        lblName.setLayoutX(txtCategoryId.getLayoutX() + 260);
+        txtCategoryName.setLayoutX(lblName.getLayoutX() + 130);
+
+        lblDescription.setLayoutX(rectangle1.getLayoutX() + 110);
+        txtDescription.setLayoutX(lblDescription.getLayoutX() + 120);
+
+        // Buttons
+        btnUpdateCategory.setLayoutX(centerX - 100);
+        btnCancelCategory.setLayoutX(centerX + 20);
+    }
+
+
 }
