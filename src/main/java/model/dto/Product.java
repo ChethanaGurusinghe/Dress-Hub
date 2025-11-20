@@ -1,5 +1,7 @@
 package model.dto;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import lombok.*;
 
 @Setter
@@ -15,4 +17,26 @@ public class Product {
     private int quantity;
     private String categoryId;
     private String supplierId;
+
+    public String getCategory() {
+        if (categoryId == null) return "Unknown";
+
+        switch (categoryId.trim().toUpperCase()) {
+            case "I001":
+                return "Ladies";
+            case "I002":
+                return "Gents";
+            case "I003":
+                return "Kids";
+            default:
+                return "Unknown";
+        }
+    }
+
+    public StringProperty categoryProperty() {
+        return new SimpleStringProperty(getCategory());
+    }
 }
+
+
+

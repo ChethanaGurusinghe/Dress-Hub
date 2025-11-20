@@ -21,12 +21,10 @@ import service.ProductService;
 import service.impl.ProductServiceImpl;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
-public class ProductManagementController implements Initializable {
+public class ProductManagementController{
 
     public Button btnUserManagement;
     public AnchorPane rootPane;
@@ -89,6 +87,35 @@ public class ProductManagementController implements Initializable {
 
     private final ProductService service = new ProductServiceImpl();
     private final ObservableList<Product> productList = FXCollections.observableArrayList();
+
+    @FXML
+    public void initialize() {
+        // match Product getter names (getProductId, getDescription, getCategory, getUnitPrice, getQuantity)
+        colProductId.setCellValueFactory(new PropertyValueFactory<>("productId"));
+        colProductName.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category")); // ensure getCategory() exists
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colQtyInInventory.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        // load from service
+        refreshTable();
+
+        // live search
+        searchTxtFeild.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal == null || newVal.trim().isEmpty()) {
+                tblProducts.setItems(productList);
+            } else {
+                String k = newVal.trim().toLowerCase();
+                ObservableList<Product> filtered = FXCollections.observableArrayList();
+                for (Product p : productList) {
+                    boolean matches = (p.getProductId() != null && p.getProductId().toLowerCase().contains(k))
+                            || (p.getDescription() != null && p.getDescription().toLowerCase().contains(k));
+                    if (matches) filtered.add(p);
+                }
+                tblProducts.setItems(filtered);
+            }
+        });
+    }
 
     private void refreshTable() {
         try {
@@ -200,8 +227,8 @@ public class ProductManagementController implements Initializable {
         }
     }
 
-    public void btnProdutManagementOnAction(ActionEvent actionEvent) {
-        // you are already in product management; do nothing or refresh
+    public void btnProdutManagementOnAction(ActionEvent event) {
+
         refreshTable();
     }
 
@@ -279,61 +306,5 @@ public class ProductManagementController implements Initializable {
             }
             // If "No" is selected, do nothing
         });
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        // match Product getter names (getProductId, getDescription, getCategory, getUnitPrice, getQuantity)
-        colProductId.setCellValueFactory(new PropertyValueFactory<>("productId"));
-        colProductName.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colCategory.setCellValueFactory(new PropertyValueFactory<>("category")); // ensure getCategory() exists
-        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
-        colQtyInInventory.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
-        // load from service
-        refreshTable();
-
-        // live search
-        searchTxtFeild.textProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal == null || newVal.trim().isEmpty()) {
-                tblProducts.setItems(productList);
-            } else {
-                String k = newVal.trim().toLowerCase();
-                ObservableList<Product> filtered = FXCollections.observableArrayList();
-                for (Product p : productList) {
-                    boolean matches = (p.getProductId() != null && p.getProductId().toLowerCase().contains(k))
-                            || (p.getDescription() != null && p.getDescription().toLowerCase().contains(k));
-                    if (matches) filtered.add(p);
-                }
-                tblProducts.setItems(filtered);
-            }
-        });
-    }
-
-    private void centerContent() {
-        double width = rootPane.getWidth();
-        double height = rootPane.getHeight();
-
-        if (width == 0 || height == 0) return;
-
-        rectangle1.setHeight(height);
-
-        btnAdminDashboard.setLayoutX(50);
-        btnProductManagement.setLayoutX(50);
-        btnUserManagement.setLayoutX(50);
-        btnSupplierManagement.setLayoutX(50);
-        btnCategoryManagement.setLayoutX(50);
-        btnLogOut.setLayoutX(59);
-
-        rectangle2.setWidth(width - 350);
-        lblHeader.setLayoutX(350 + (rectangle2.getWidth() / 2 - lblHeader.getBoundsInParent().getWidth() / 2));
-
-        searchTxtFeild.setLayoutX(520);
-        btnAddProduct.setLayoutX(width - 320);
-
-        tblProducts.setLayoutX(350 + ((width - 350 - tblProducts.getPrefWidth()) / 2));
-
-        btnEdit.setLayoutX(tblProducts.getLayoutX() + 200);
-        btnDelete.setLayoutX(tblProducts.getLayoutX() + 380);
     }
 }

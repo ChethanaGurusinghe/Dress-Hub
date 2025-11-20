@@ -81,8 +81,8 @@ public class AdminDashboardController implements Initializable {
     @FXML
     private BarChart<String, Number> salesChart;
 
-    @FXML
-    private EventObject event;
+//    @FXML
+//    private EventObject event;
 
     @FXML
     void btnAdminDashboardOnAction(ActionEvent event) {
@@ -226,7 +226,7 @@ public class AdminDashboardController implements Initializable {
             stage.show();
 
             // Close the current dashboard window
-            Stage currentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Stage currentStage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             currentStage.close();
 
         } catch (IOException e) {
