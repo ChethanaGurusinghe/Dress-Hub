@@ -10,38 +10,38 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="785.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateUserFormController">
+<AnchorPane fx:id="rootPane" prefHeight="785.0" prefWidth="1440.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateUserFormController">
    <children>
-      <ImageView fitHeight="109.0" fitWidth="128.0" layoutX="622.0" layoutY="29.0">
+      <ImageView fx:id="logoImage" fitHeight="109.0" fitWidth="128.0" layoutX="622.0" layoutY="29.0">
          <image>
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="727.0" layoutY="62.0" prefHeight="42.0" prefWidth="181.0" style="-fx-text-fill: black;" text="DressHub">
+      <Label fx:id="lblTitle" layoutX="727.0" layoutY="62.0" prefHeight="42.0" prefWidth="181.0" style="-fx-text-fill: black;" text="DressHub">
          <font>
             <Font name="Castellar" size="30.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="514.0" layoutX="245.0" layoutY="167.0" stroke="#e64a19" strokeType="INSIDE" strokeWidth="2.0" width="1080.0" />
-      <Label layoutX="350.0" layoutY="228.0" text="User ID">
+      <Rectangle fx:id="rectangle1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="514.0" layoutX="245.0" layoutY="167.0" stroke="#e64a19" strokeType="INSIDE" strokeWidth="2.0" width="1080.0" />
+      <Label fx:id="lblUserId" layoutX="350.0" layoutY="228.0" text="User ID">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <TextField fx:id="txtUserId" layoutX="458.0" layoutY="226.0" />
-      <Label layoutX="750.0" layoutY="228.0" text="Full Name">
+      <Label fx:id="lblFullName" layoutX="750.0" layoutY="228.0" text="Full Name">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <TextField fx:id="txtFullName" layoutX="888.0" layoutY="225.0" prefHeight="26.0" prefWidth="256.0" />
-      <Label layoutX="350.0" layoutY="293.0" text="Phone No">
+      <Label fx:id="lblPhone" layoutX="350.0" layoutY="293.0" text="Phone No">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <TextField fx:id="txtPhone" layoutX="458.0" layoutY="291.0" prefHeight="26.0" prefWidth="182.0" />
-      <Label layoutX="750.0" layoutY="293.0" text="Email">
+      <Label fx:id="lblEmail" layoutX="750.0" layoutY="293.0" text="Email">
          <font>
             <Font size="15.0" />
          </font>
@@ -57,12 +57,12 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
-      <Label layoutX="707.0" layoutY="116.0" text="Update User" underline="true">
+      <Label fx:id="lblSubTitle" layoutX="707.0" layoutY="116.0" text="Update User" underline="true">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="350.0" layoutY="361.0" text="Role">
+      <Label fx:id="lblRole" layoutX="350.0" layoutY="361.0" text="Role">
          <font>
             <Font size="15.0" />
          </font>

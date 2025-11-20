@@ -5,6 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +16,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.dto.User;
 import service.UserService;
@@ -21,15 +28,29 @@ import service.impl.UserServiceImpl;
 
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class UserManagementController {
+public class UserManagementController implements Initializable {
 
     public Button btnUserManagement;
     public Button btnAddUser;
     public TableView tblUser;
     public TableColumn colRole;
+    public AnchorPane rootPane;
+    public Rectangle rec1;
+    public ImageView logoImage;
+    public Label lblTitle;
+    public Rectangle rec2;
+    public Text lblHeader;
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private boolean isMaximized = false;
+
+    private double prevX, prevY, prevWidth, prevHeight;
+
     UserService service = new UserServiceImpl();
     ObservableList<User> userList = FXCollections.observableArrayList();
 
@@ -218,29 +239,6 @@ public class UserManagementController {
         }
         addUserStage.show();
     }
-    @FXML
-    public void initialize() {
-
-        colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        colEmployeeName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-        colPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phoneNo"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
-        loadUserTable();
-        tblUser.refresh();
-
-        searchTxtFeild.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.isEmpty()) {
-                loadUserTable();
-            } else {
-                List<User> results = service.searchUsers(newValue);
-                userList.clear();
-                userList.addAll(results);
-                tblUser.setItems(userList);
-            }
-        });
-
-    }
 
     private void loadUserTable() {
         userList.clear();
@@ -301,6 +299,81 @@ public class UserManagementController {
             }
             // If "No" is selected, do nothing
         });
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        rootPane.setOnMousePressed(event -> {
+            if (!isMaximized) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+
+        rootPane.setOnMouseDragged(event -> {
+            if (!isMaximized) {
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+
+        // ----------------- Double Click Maximize -----------------
+        rootPane.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                toggleMaximize();
+            }
+        });
+
+        colEmployeeId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colEmployeeName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
+        colPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phoneNo"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
+        loadUserTable();
+        tblUser.refresh();
+
+        searchTxtFeild.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                loadUserTable();
+            } else {
+                List<User> results = service.searchUsers(newValue);
+                userList.clear();
+                userList.addAll(results);
+                tblUser.setItems(userList);
+            }
+        });
+    }
+
+    private void toggleMaximize() {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+
+        if (!isMaximized) {
+            // Save previous window size
+            prevX = stage.getX();
+            prevY = stage.getY();
+            prevWidth = stage.getWidth();
+            prevHeight = stage.getHeight();
+
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+
+            stage.setX(screenBounds.getMinX());
+            stage.setY(screenBounds.getMinY());
+            stage.setWidth(screenBounds.getWidth());
+            stage.setHeight(screenBounds.getHeight());
+
+            isMaximized = true;
+
+        } else {
+            // Restore window size
+            stage.setX(prevX);
+            stage.setY(prevY);
+            stage.setWidth(prevWidth);
+            stage.setHeight(prevHeight);
+
+            isMaximized = false;
+        }
     }
 
 }

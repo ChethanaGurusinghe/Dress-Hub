@@ -3,14 +3,39 @@ package controller;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import model.dto.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
 import util.AlertUtils;
 
-public class UpdateUserFormController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class UpdateUserFormController implements Initializable {
+
+    public AnchorPane rootPane;
+    public ImageView logoImage;
+    public Label lblTitle;
+    public Rectangle rectangle1;
+    public Label lblUserId;
+    public Label lblFullName;
+    public Label lblPhone;
+    public Label lblEmail;
+    public Label lblSubTitle;
+    public Label lblRole;
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private boolean isMaximized = false;
+
+    private double prevX, prevY, prevWidth, prevHeight;
     private ObservableList<User> userList;
     private User user;
 
@@ -36,12 +61,6 @@ public class UpdateUserFormController {
     private ComboBox<String> cmbRole;
 
     UserService userService = new UserServiceImpl();
-
-    @FXML
-    public void initialize() {
-        cmbRole.getItems().addAll("ADMIN", "EMPLOYEE");
-        txtUserId.setEditable(false);
-    }
 
     public void setUserData(User user) {
 
@@ -102,5 +121,64 @@ public class UpdateUserFormController {
 
     public void btnUserCancelOnAction(ActionEvent event) {
         ((Button) event.getSource()).getScene().getWindow().hide();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        rootPane.setOnMousePressed(event -> {
+            if (!isMaximized) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+
+        rootPane.setOnMouseDragged(event -> {
+            if (!isMaximized) {
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
+
+        // ----------- Double-click Maximize/Restore -----------
+        rootPane.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                toggleMaximize();
+            }
+        });
+
+        cmbRole.getItems().addAll("ADMIN", "EMPLOYEE");
+        txtUserId.setEditable(false);
+    }
+
+    private void toggleMaximize() {
+        Stage stage = (Stage) rootPane.getScene().getWindow();
+
+        if (!isMaximized) {
+            // Save old bounds
+            prevX = stage.getX();
+            prevY = stage.getY();
+            prevWidth = stage.getWidth();
+            prevHeight = stage.getHeight();
+
+            // Maximize
+            Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
+
+            isMaximized = true;
+
+        } else {
+            // Restore
+            stage.setX(prevX);
+            stage.setY(prevY);
+            stage.setWidth(prevWidth);
+            stage.setHeight(prevHeight);
+
+            isMaximized = false;
+        }
     }
 }
