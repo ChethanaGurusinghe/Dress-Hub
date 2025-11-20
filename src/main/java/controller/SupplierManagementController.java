@@ -1,28 +1,42 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.dto.Supplier;
 import repository.SupplierRepository;
 import repository.impl.SupplierRepositoryImpl;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import static util.AlertUtils.showAlert;
 
-public class SupplierManagementController {
+public class SupplierManagementController implements Initializable {
 
+    public AnchorPane rootPane;
+    public Rectangle rectangle1;
+    public ImageView logoImage;
+    public Label lblTittle;
+    public Rectangle rectangle2;
+    public Text lblHeader;
     @FXML
     private TextField txtSearch;
 
@@ -190,19 +204,6 @@ public class SupplierManagementController {
         }
     }
 
-    // --- Initialize ---
-    @FXML
-    public void initialize() {
-        colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supCode"));
-        colCompanyName.setCellValueFactory(new PropertyValueFactory<>("compName"));
-        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("supName"));
-        colPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
-
-        loadTable();
-    }
-
     private void loadTable() {
         try {
             List<Supplier> list = repo.getAllSuppliers();
@@ -260,4 +261,60 @@ public class SupplierManagementController {
             // If "No" is selected, do nothing
         });
     }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        Platform.runLater(() -> {
+            adjustLayout();
+
+            rootPane.widthProperty().addListener((obs, oldVal, newVal) -> adjustLayout());
+            rootPane.heightProperty().addListener((obs, oldVal, newVal) -> adjustLayout());
+        });
+
+        colSupplierId.setCellValueFactory(new PropertyValueFactory<>("supCode"));
+        colCompanyName.setCellValueFactory(new PropertyValueFactory<>("compName"));
+        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("supName"));
+        colPhoneNo.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
+
+        loadTable();
+    }
+
+    private void adjustLayout() {
+        double paneWidth = rootPane.getWidth();
+        double paneHeight = rootPane.getHeight();
+
+        if (paneWidth == 0) return; // window not fully loaded
+
+        double sidebarWidth = 350;
+
+        double availableWidth = paneWidth - sidebarWidth;
+
+        // --- Position search bar ---
+        txtSearch.setLayoutX(sidebarWidth + 150);
+        txtSearch.setLayoutY(140);
+
+        // --- Add Supplier button alignment (right side) ---
+        btnAddSupplier.setLayoutX(sidebarWidth + availableWidth - 180);
+        btnAddSupplier.setLayoutY(140);
+
+        // --- Table Resize ---
+        tblSupplier.setLayoutX(sidebarWidth + 120);
+        tblSupplier.setLayoutY(200);
+        tblSupplier.setPrefWidth(availableWidth - 150);
+        tblSupplier.setPrefHeight(paneHeight - 320);
+
+        // --- Edit / Delete buttons ---
+        btnEdit.setLayoutX(sidebarWidth + availableWidth - 350);
+        btnEdit.setLayoutY(paneHeight - 90);
+
+        btnDelete.setLayoutX(sidebarWidth + availableWidth - 180);
+        btnDelete.setLayoutY(paneHeight - 90);
+
+        // --- Header text ---
+        lblHeader.setLayoutX(sidebarWidth + (availableWidth / 2) - 120);
+    }
+
 }
