@@ -61,7 +61,7 @@
             <Font name="System Bold" size="23.0" />
          </font>
       </Text>
-      <TextField fx:id="searchTxtFeild" layoutX="589.0" layoutY="143.0" prefHeight="26.0" prefWidth="262.0" text="Serach by category id" />
+      <TextField fx:id="searchTxtFeild" layoutX="670.0" layoutY="143.0" prefHeight="26.0" prefWidth="152.0" />
       <Button fx:id="btnAddCategory" layoutX="1096.0" layoutY="141.0" mnemonicParsing="false" onAction="#btnAddCategoryOnAction" prefHeight="26.0" prefWidth="142.0" style="-fx-background-color: #E64A19;" text="+ Add Category" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -84,5 +84,6 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Button>
+      <Label layoutX="589.0" layoutY="148.0" text="Search By Id :" />
    </children>
 </AnchorPane>
